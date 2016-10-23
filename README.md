@@ -16,7 +16,7 @@ Note: despite being called a server plugin, it can be loaded client-side. Howeve
 If the plugin loaded correctly, you should now be able to use the following commands in the console:
 
 - **cvar_unhide_all**: Unhide all FCVAR_HIDDEN and FCVAR_DEVELOPMENTONLY convars
-- **find_all**: Replica of \"find\". Ignores FCVAR_HIDDEN or FCVAR_DEVELOPMENTONLY flags
+- **find_all**: Replica of "find". Ignores FCVAR_HIDDEN or FCVAR_DEVELOPMENTONLY flags
 - **cvarlist_all**: List all ConVars. Syntax: [hidden]
 - **force_dispatch**: Dispatch a command regardless of any hidden, cheat or developmentonly flags
 - **cvar_set**: Set the value of a ConVar regardless of its maximum/minimum values
