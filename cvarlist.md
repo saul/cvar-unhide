@@ -130,7 +130,7 @@ Name | Value | Flags | Description
 @panorama_clamp_fractional_pixel_positions | 1        | "devonly"        | 
 @panorama_classes_force_invalidate        | 0        | "devonly"        | Force style invalidation of the entire panel subtree when adding / removing classes.
 @panorama_clear_frames_on_device_restore  | 2        | "devonly"        | 
-@panorama_daisy_wheel                     | ABXY     | "devonly"        | Daisy wheel input mode: RS | ABXY
+@panorama_daisy_wheel                     | ABXY     | "devonly"        | Daisy wheel input mode: RS \| ABXY
 @panorama_debug_font_selection            | 0        | "devonly"        | 
 @panorama_debug_movies                    | 0        | "devonly"        | 
 @panorama_debug_overlay_opacity           | 0.8      | "a"              | 
@@ -444,7 +444,7 @@ blackbox                                  | 1        | "devonly"        |
 blackbox_dump                             | cmd      | "devonly", "cheat", "norecord" | Dump the contents of the blackbox
 blackbox_record                           | cmd      | "norecord"       | Record an entry into the blackbox
 blink_duration                            | 0.2      | "devonly", "cl"  | How many seconds an eye blink will last.
-bot_add                                   | cmd      | "sv"             | bot_add &lt;t|ct&gt; &lt;type&gt; &lt;difficulty&gt; &lt;name&gt; - Adds a bot matching the given criteria.
+bot_add                                   | cmd      | "sv"             | bot_add &lt;t\|ct&gt; &lt;type&gt; &lt;difficulty&gt; &lt;name&gt; - Adds a bot matching the given criteria.
 bot_add_ct                                | cmd      | "sv"             | bot_add_ct &lt;type&gt; &lt;difficulty&gt; &lt;name&gt; - Adds a Counter-Terrorist bot matching the given criteria.
 bot_add_t                                 | cmd      | "sv"             | bot_add_t &lt;type&gt; &lt;difficulty&gt; &lt;name&gt; - Adds a terrorist bot matching the given criteria.
 bot_all_weapons                           | cmd      | "sv"             | Allows the bots to use all weapons
@@ -486,8 +486,8 @@ bot_join_after_player                     | 1        | "sv", "rep"      | If non
 bot_join_delay                            | 0        | "devonly", "sv"  | Prevents bots from joining the server for this many seconds after a map change.
 bot_join_in_warmup                        | 1        | "devonly", "sv"  | Prevents bots from joining the server while warmup phase is active.
 bot_join_team                             | any      | "sv", "rep"      | Determines the team bots will join into. Allowed values: 'any', 'T', or 'CT'.
-bot_kick                                  | cmd      | "sv"             | bot_kick &lt;all&gt; &lt;t|ct&gt; &lt;type&gt; &lt;difficulty&gt; &lt;name&gt; - Kicks a specific bot, or all bots, matching the given criteria.
-bot_kill                                  | cmd      | "sv", "cheat"    | bot_kill &lt;all&gt; &lt;t|ct&gt; &lt;type&gt; &lt;difficulty&gt; &lt;name&gt; - Kills a specific bot, or all bots, matching the given criteria.
+bot_kick                                  | cmd      | "sv"             | bot_kick &lt;all&gt; &lt;t\|ct&gt; &lt;type&gt; &lt;difficulty&gt; &lt;name&gt; - Kicks a specific bot, or all bots, matching the given criteria.
+bot_kill                                  | cmd      | "sv", "cheat"    | bot_kill &lt;all&gt; &lt;t\|ct&gt; &lt;type&gt; &lt;difficulty&gt; &lt;name&gt; - Kills a specific bot, or all bots, matching the given criteria.
 bot_knives_only                           | cmd      | "sv"             | Restricts the bots to only using knives
 bot_loadout                               |          | "sv", "cheat"    | bots are given these items at round start
 bot_max_vision_distance_override          | -1       | "sv", "rep", "cheat" | Max distance bots can see targets.
@@ -918,7 +918,7 @@ cl_obs_interp_turn_to_face_end_frac       | 0.65     | "devonly", "cl"  |
 cl_obs_interp_turn_to_face_start_frac     | 0.1      | "devonly", "cl"  | 
 cl_observercrosshair                      | 1        | "cl", "a", "ss"  | 
 cl_overdraw_test                          | FCVAR_NEVER_AS_STRING | "cl", "numeric", "cheat" | 
-cl_panelanimation                         | cmd      | "cl"             | Shows panel animation variables: &lt;panelname | blank for all panels&gt;.
+cl_panelanimation                         | cmd      | "cl"             | Shows panel animation variables: &lt;panelname \| blank for all panels&gt;.
 cl_particle_batch_mode                    | 1        | "devonly", "cl"  | 
 cl_particle_fallback_base                 | 0        | "devonly", "cl"  | Base for falling back to cheaper effects under load.
 cl_particle_fallback_multiplier           | 1        | "devonly", "cl"  | Multiplier for falling back to cheaper effects under load.
@@ -1337,7 +1337,7 @@ dumpeventqueue                            | cmd      | "sv"             | Dump t
 dumpgamestringtable                       | cmd      | "sv", "cheat"    | Dump the contents of the game string table to the console.
 dumpstringtables                          | cmd      |                  | Print string tables to console.
 dz_clearteams                             | cmd      | "sv"             | Clear all DZ teams
-dz_jointeam                               | cmd      | "sv", "print"    | dz_jointeam team# \[userid#|name\] - Join DZ team N (0 to leave your team).  Server admins can assign other players to teams.
+dz_jointeam                               | cmd      | "sv", "print"    | dz_jointeam team# \[userid#\|name\] - Join DZ team N (0 to leave your team).  Server admins can assign other players to teams.
 dz_shuffle_teams                          | cmd      | "sv"             | Shuffle all teams for Danger Zone
 dz_spawnselect_choose_hex                 | cmd      | "sv", "print"    | 
 echo                                      | cmd      |                  | Echo text to console.
@@ -1836,7 +1836,7 @@ locator_target_offset_x                   | -17      | "devonly", "cl"  | How ma
 locator_target_offset_y                   | -64      | "devonly", "cl"  | How many pixels to offset the locator from the target position.
 locator_topdown_style                     | 0        | "devonly", "cl"  | Topdown games set this to handle distance and offscreen location differently.
 lockMoveControllerRet                     | 0        | "cl", "a"        | 
-log                                       | cmd      |                  | Enables logging to file, console, and udp &lt; on | off &gt;.
+log                                       | cmd      |                  | Enables logging to file, console, and udp &lt; on \| off &gt;.
 log_color                                 | cmd      | "norecord"       | Set the color of a logging channel.
 log_dumpchannels                          | cmd      | "norecord"       | Dumps information about all logging channels.
 log_flags                                 | cmd      | "norecord"       | Set the flags on a logging channel.
@@ -2229,7 +2229,7 @@ mm_datacenter_update_interval             | 3600     | "devonly"        | Interv
 mm_debugprint                             | cmd      |                  | Show debug information about current matchmaking session
 mm_dedicated_allow                        | 1        | "devonly"        | 1 = allow searches for dedicated servers
 mm_dedicated_fake                         | 0        | "devonly"        | 1 = pretend like search is going, but abort after some time
-mm_dedicated_force_servers                |          |                  | Comma delimited list of ip:port of servers used to search for dedicated servers instead of searching for public servers. Use syntax `publicip1:port|privateip1:port,publicip2:port|privateip2:port` if your server is behind NAT. If the server is behind NAT, you can specify `0.0.0.0|privateip:port` and if server port is in the list of `mm_server_search_lan_ports` its public address should be automatically detected.
+mm_dedicated_force_servers                |          |                  | Comma delimited list of ip:port of servers used to search for dedicated servers instead of searching for public servers. Use syntax `publicip1:port\|privateip1:port,publicip2:port\|privateip2:port` if your server is behind NAT. If the server is behind NAT, you can specify `0.0.0.0\|privateip:port` and if server port is in the list of `mm_server_search_lan_ports` its public address should be automatically detected.
 mm_dedicated_ip                           |          | "devonly"        | IP address of dedicated servers to consider available
 mm_dedicated_search_maxping               | 150      | "a"              | Longest preferred ping to dedicated servers for games
 mm_dedicated_search_maxresults            | 75       | "devonly"        | 
@@ -2757,7 +2757,7 @@ nav_world_center                          | cmd      | "sv", "cheat"    | Center
 nb_shadow_dist                            | 400      | "devonly", "cl"  | 
 net_allow_multicast                       | 1        | "a"              | 
 net_allow_syslink                         | 1        | "devonly"        | 
-net_blockmsg                              | 0        | "cheat"          | Discards incoming message: &lt;0|1|name&gt;
+net_blockmsg                              | 0        | "cheat"          | Discards incoming message: &lt;0\|1\|name&gt;
 net_channels                              | cmd      |                  | Shows net channel info
 net_chokeloop                             | 0        | "devonly"        | Apply bandwidth choke to loopback packets
 net_client_steamdatagram_enable_override  | 0        | "cl"             | 0: Use connect method requested by GC.  &gt;0: Always use SDR if possible.  &lt;0: Always use direct UDP if possible
@@ -2800,7 +2800,7 @@ net_showdrop                              | 0        | "devonly"        | Show d
 net_showeventlisteners                    | 0        | "devonly"        | Show listening addition/removals
 net_showevents                            | 0        | "devonly"        | Dump game events to console (1=client only, 2=all).
 net_showfragments                         | 0        | "devonly"        | Show netchannel fragments
-net_showmsg                               | 0        | "devonly"        | Show incoming message: &lt;0|1|name&gt;
+net_showmsg                               | 0        | "devonly"        | Show incoming message: &lt;0\|1\|name&gt;
 net_showpeaks                             | 0        | "devonly"        | Show messages for large packets only: &lt;size&gt;
 net_showreliablesounds                    | 0        | "cheat"          | 
 net_showsplits                            | 0        |                  | Show info about packet splits
