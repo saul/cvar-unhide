@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <map>
 #include <vector>
+#include <string>
 
 #include "interface.h"
 #include "dbg.h"
@@ -120,6 +121,11 @@ public:
 	virtual void			OnQueryCvarValueFinished( QueryCvarCookie_t iCookie, edict_t *pPlayerEntity, EQueryCvarValueStatus eStatus, const char *pCvarName, const char *pCvarValue ) {};
 	virtual void			OnEdictAllocated( edict_t *edict ) {};
 	virtual void			OnEdictFreed( const edict_t *edict ) {};
+	virtual bool			BNetworkCryptKeyCheckRequired(uint32 unFromIP, uint16 usFromPort, uint32 unAccountIdProvidedByClient,
+		bool bClientWantsToUseCryptKey) { return false; };
+	virtual bool			BNetworkCryptKeyValidate(uint32 unFromIP, uint16 usFromPort, uint32 unAccountIdProvidedByClient,
+		int nEncryptionKeyIndexFromClient, int numEncryptedBytesFromClient, byte* pbEncryptedBufferFromClient,
+		byte* pbPlainTextKeyForNetchan) { return false; }
 
 	// Internal interface
 public:
@@ -331,6 +337,21 @@ static std::string ConvarFlagsString(const ConCommandBase *cmd)
 	return result;
 }
 
+void string_replace(std::string& data, std::string toSearch, std::string replaceStr)
+{
+	// Get the first occurrence
+	size_t pos = data.find(toSearch);
+
+	// Repeat till end is reached
+	while (pos != std::string::npos)
+	{
+		// Replace this occurrence of Sub String
+		data.replace(pos, toSearch.size(), replaceStr);
+		// Get the next occurrence from the current position
+		pos = data.find(toSearch, pos + replaceStr.size());
+	}
+}
+
 CON_COMMAND(cvarlist_all, "List all ConVars. Syntax: [hidden]")
 {
 	ICvar::Iterator iter(g_pCVar);
@@ -347,8 +368,8 @@ CON_COMMAND(cvarlist_all, "List all ConVars. Syntax: [hidden]")
 		allCvars[cmd->GetName()] = cmd;
 	}
 
-	Msg("Name | Value | Flags | Description\n");
-	Msg("---- | ----- | ----- | -----------\n");
+	Msg("Name | Default | Flags | Description\n");
+	Msg("---- | ------- | ----- | -----------\n");
 
 	for (auto pair : allCvars)
 	{
@@ -364,17 +385,22 @@ CON_COMMAND(cvarlist_all, "List all ConVars. Syntax: [hidden]")
 		else
 		{
 			auto cvar = static_cast<ConVar*>(cmd);
-			Msg("%-8s | ", cvar->GetString());
+			Msg("%-8s | ", cvar->GetDefault());
 		}
 		
 		Msg("%-16s | ", ConvarFlagsString(cmd).c_str());
 
-		const char *pszActualHelpText = cmd->GetHelpText();
-		size_t helpTextBufSize = strlen(pszActualHelpText) + 1;
-		char *newHelpText = new char[helpTextBufSize];
-		V_StrSubst(pszActualHelpText, "\n", " ", newHelpText, helpTextBufSize);
+		std::string helpText{ cmd->GetHelpText() };
 
-		Msg("%s\n", newHelpText);
+		string_replace(helpText, "\\", "\\\\");
+		string_replace(helpText, "<", "&lt;");
+		string_replace(helpText, ">", "&gt;");
+		string_replace(helpText, "[", "\\[");
+		string_replace(helpText, "]", "\\]");
+		string_replace(helpText, "\n", "<br>");
+		string_replace(helpText, "|", "\\|");
+		
+		Msg("%s\n", helpText.c_str());
 	}
 }
 
