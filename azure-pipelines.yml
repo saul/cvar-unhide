@@ -22,6 +22,13 @@ steps:
     PathtoPublish: 'addons'
     ArtifactName: 'addons'
     publishLocation: 'Container'
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: 'addons'
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/addons.zip'
+    replaceExistingArchive: true
 - task: GitHubRelease@0
   inputs:
     gitHubConnection: 'c12f0d3e-24cb-41a4-9533-b9b128ebbabf'
@@ -32,5 +39,5 @@ steps:
     tag: 'v$(Build.BuildNumber)'
     title: 'v$(Build.BuildNumber)'
     releaseNotesSource: 'input'
-    assets: 'addons'
+    assets: '$(Build.ArtifactStagingDirectory)/addons.zip'
     addChangeLog: false
