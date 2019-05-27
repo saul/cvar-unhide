@@ -1,0 +1,15 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-2019'
+
+steps:
+- checkout: self
+  submodules: 'true'
+
+- task: VSBuild@1
+  inputs:
+    solution: 'cvar-unhide.sln'
+    vsVersion: '16.0'
+    maximumCpuCount: true
