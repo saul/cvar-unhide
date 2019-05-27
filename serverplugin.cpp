@@ -20,6 +20,7 @@
 #include "Color.h"
 #include "fmtstr.h"
 #include "server_class.h"
+#include "version.h"
 
 //-----------------------------------------------------------------------------
 // Colours
@@ -210,7 +211,7 @@ void CServerPlugin::Unload()
 //-----------------------------------------------------------------------------
 const char *CServerPlugin::GetPluginDescription()
 {
-	return "cvar-unhide, 1.0, Saul Rennison";
+	return "cvar-unhide, " CVAR_UNHIDE_VERSION ", Saul Rennison";
 }
 
 //-----------------------------------------------------------------------------

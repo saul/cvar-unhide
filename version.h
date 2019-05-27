@@ -1,0 +1,1 @@
+#define CVAR_UNHIDE_VERSION "v1.0"
