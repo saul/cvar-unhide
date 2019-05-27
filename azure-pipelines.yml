@@ -7,9 +7,14 @@ pool:
 steps:
 - checkout: self
   submodules: 'true'
-
 - task: VSBuild@1
   inputs:
     solution: 'cvar-unhide.sln'
     vsVersion: '16.0'
     maximumCpuCount: true
+    configuration: 'Release'
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: 'addons'
+    ArtifactName: 'addons'
+    publishLocation: 'Container'
