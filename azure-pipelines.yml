@@ -24,7 +24,7 @@ steps:
     publishLocation: 'Container'
 - task: GitHubRelease@0
   inputs:
-    gitHubConnection: 'saul'
+    gitHubConnection: 'c12f0d3e-24cb-41a4-9533-b9b128ebbabf'
     repositoryName: '$(Build.Repository.Name)'
     action: 'create'
     target: '$(Build.SourceVersion)'
