@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.28917.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cvar-unhide", "cvar-unhide.vcxproj", "{FE68CE13-526B-48C8-825C-F3BC64959AA4}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tier1", "hl2sdk\tier1\tier1.vcxproj", "{E1DA8DB8-FB4C-4B14-91A6-98BCED6B9720}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tier1", "tier1-2019\tier1-2019.vcxproj", "{E1DA8DB8-FB4C-4B14-91A6-98BCED6B9720}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
