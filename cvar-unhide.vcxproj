@@ -13,6 +13,11 @@
   <ItemGroup>
     <ClCompile Include="serverplugin.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="hl2sdk\tier1\tier1.vcxproj">
+      <Project>{e1da8db8-fb4c-4b14-91a6-98bced6b9720}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{FE68CE13-526B-48C8-825C-F3BC64959AA4}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
