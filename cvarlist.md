@@ -1,8 +1,8 @@
 ```
 ] version
-Protocol version 13698 [930/930]
-Exe version 1.36.9.8 (csgo)
-Exe build: 13:06:25 May 22 2019 (7501) (730)
+Protocol version 13720 [1004/1004]
+Exe version 1.37.2.0 (csgo)
+Exe build: 13:20:06 Sep 19 2019 (7621) (730)
 Windows version 6.2
 ```
 
@@ -653,6 +653,7 @@ cl_animationinfo                          | cmd      | "cl"             | Hud el
 cl_autobuy                                |          | "cl"             | The order in which autobuy will attempt to purchase items
 cl_autohelp                               | 1        | "cl", "a", "user" | Auto-help
 cl_autowepswitch                          | 1        | "cl", "a", "user", "ss" | Automatically switch to picked up weapons (if more powerful)
+cl_avatar_convert_png                     | cmd      | "cl", "cheat"    | Converts all rgb avatars in the avatars directory to png
 cl_avatar_convert_rgb                     | cmd      | "cl", "cheat"    | Converts all png avatars in the avatars directory to rgb
 cl_backspeed                              | 450      | "cl", "cheat"    | 
 cl_beam_test_traces                       | 0        | "devonly", "cl"  | Enable debug overlay on traces that determine where the client-side visible env_beam is drawn. Has no bearing on the server-side damage-causing part of the beam.
@@ -705,6 +706,7 @@ cl_crosshair_dynamic_maxdist_splitratio   | 0.35     | "cl", "a", "ss"  | If usi
 cl_crosshair_dynamic_splitalpha_innermod  | 1        | "cl", "a", "ss"  | If using cl_crosshairstyle 2, this is the alpha modification that will be used for the INNER crosshair pips once they've split. \[0 - 1\]
 cl_crosshair_dynamic_splitalpha_outermod  | 0.5      | "cl", "a", "ss"  | If using cl_crosshairstyle 2, this is the alpha modification that will be used for the OUTER crosshair pips once they've split. \[0.3 - 1\]
 cl_crosshair_dynamic_splitdist            | 7        | "cl", "a", "ss"  | If using cl_crosshairstyle 2, this is the distance that the crosshair pips will split into 2. (default is 7)
+cl_crosshair_friendly_warning             | 1        | "cl", "a"        | 0: always off, 1: only on default crosshair styles, 2: always on
 cl_crosshair_outlinethickness             | 1        | "cl", "a", "ss"  | Set how thick you want your crosshair outline to draw (0.1-3)
 cl_crosshair_recoil                       | 0        | "cl", "cheat"    | Recoil/aimpunch will move the user's crosshair to show the effect
 cl_crosshair_sniper_show_normal_inaccuracy | 0        | "cl", "a", "ss"  | Include standing inaccuracy when determining sniper crosshair blur
@@ -854,6 +856,7 @@ cl_freezecampanel_position_dynamic        | 1        | "cl", "a"        | Turn o
 cl_fullupdate                             | cmd      | "cheat"          | Forces the server to send a full update packet
 cl_game_mode_convars                      | cmd      | "cl"             | Display the values of the convars for the current game_mode.
 cl_grass_mip_bias                         | -0.5     | "a"              | 
+cl_grenadepreview                         | 0        | "cl", "cheat"    | Show trajectory of a grenade when pin is pulled.
 cl_gunlowerangle                          | 2        | "devonly", "cl"  | 
 cl_gunlowerspeed                          | 0.1      | "devonly", "cl"  | 
 cl_headbob_land_dip_amt                   | 4        | "devonly", "cl"  | 
@@ -878,6 +881,8 @@ cl_interpolate                            | 1        |                  | Enable
 cl_inventory_debug_tooltip                | 0        | "cl"             | 
 cl_inventory_saved_filter2                | all      | "cl", "a"        | 
 cl_inventory_saved_sort2                  | inv_sort_age | "cl", "a"        | 
+cl_invites_only_friends                   | 0        | "cl", "a"        | If turned on, will ignore in-game invites from recent teammates or other non-friends
+cl_invites_only_mainmenu                  | 0        | "cl", "a"        | If turned on, will ignore all invites when user is playing a match
 cl_jiggle_bone_debug                      | 0        | "cl", "cheat"    | Display physics-based 'jiggle bone' debugging information
 cl_jiggle_bone_debug_pitch_constraints    | 0        | "cl", "cheat"    | Display physics-based 'jiggle bone' debugging information
 cl_jiggle_bone_debug_yaw_constraints      | 0        | "cl", "cheat"    | Display physics-based 'jiggle bone' debugging information
@@ -971,6 +976,7 @@ cl_predictioncopy_describe                | cmd      | "cl"             | Descri
 cl_predictionlist                         | 0        | "cl", "cheat"    | Show which entities are predicting<br>
 cl_predictphysics                         | 0        | "devonly", "cl"  | Use a prediction-friendly physics interface on the client
 cl_predictweapons                         | 1        | "cl", "user"     | Perform client side prediction of weapon effects.
+cl_promoted_settings_acknowledged         | 0:0      | "cl", "a"        | 
 cl_proximity_grass                        | 1        | "devonly"        | 
 cl_quest_events_print                     | cmd      | "cl"             | cl_quest_events_print
 cl_quest_schedule_print                   | cmd      | "cl"             | cl_quest_schedule_print
@@ -1048,6 +1054,7 @@ cl_showpluginmessages2                    | 0        | "a"              | Allow 
 cl_showpos                                | 0        | "cl"             | Draw current position at top of screen
 cl_showtextmsg                            | 1        | "devonly", "cl"  | Enable/disable text messages printing on the screen.
 cl_sidespeed                              | 450      | "cl", "cheat"    | 
+cl_sim_grenade_trajectory                 | cmd      | "cl", "cheat"    | Draw trajectory of the deployed grenade if thrown from this position. Takes an optional parameter for how long the drawn trajectory will last.
 cl_simdbones                              | 0        | "devonly", "cl", "rep" | Use SIMD bone setup.
 cl_simulationtimefix                      | 1        | "devonly", "cl"  | 
 cl_skipfastpath                           | 0        | "cl", "cheat"    | Set to 1 to stop all models that go through the model fast path from rendering
@@ -1085,9 +1092,9 @@ cl_tablet_mapmode                         | 1        | "cl", "a"        |
 cl_teamid                                 | 0        | "devonly", "cl"  | 
 cl_teamid_max                             | 1000     | "devonly"        | 
 cl_teamid_min                             | 200      | "devonly"        | 
-cl_teamid_overhead_always                 | 0        | "cl", "a"        | Always show team id over teammates. 1 = pips; 2 = pips, name, and equipment
 cl_teamid_overhead_maxdist                | 3000     | "cl", "cheat", "ss" | max distance at which the overhead team id icons will show
 cl_teamid_overhead_maxdist_spec           | 2000     | "cl", "cheat", "ss" | max distance at which the overhead team id icons will show when a spectator
+cl_teamid_overhead_mode                   | 2        | "cl", "a"        | Always show team id over teammates. 1 = pips; 2 = pips, name, and equipment
 cl_teammate_color_1                       | 248 246 45 | "devonly"        | 
 cl_teammate_color_2                       | 161 25 240 | "devonly"        | 
 cl_teammate_color_3                       | 0 181 98 | "devonly"        | 
@@ -1220,6 +1227,7 @@ csm_quality_level                         | 0        | "devonly"        | Cascad
 csm_quality_level_optionsui               | 9999999  | "devonly", "cl"  | Used to set video property from options UI.
 csm_quality_level_restart                 | 0        | "devonly", "cl"  | Used to set video property at device reset.
 custom_bot_difficulty                     | 0        | "sv", "cl", "rep" | Bot difficulty for offline play.
+cv_bot_ai_bt_debug_target                 | -1       | "sv", "rep", "cheat" | Draw the behavior tree of the given bot.
 cvar_set                                  | cmd      |                  | Set the value of a ConVar regardless of its maximum/minimum values
 cvar_unhide_all                           | cmd      |                  | Unhide all FCVAR_HIDDEN and FCVAR_DEVELOPMENTONLY convars
 cvarlist                                  | cmd      |                  | Show the list of convars/concommands.
@@ -1245,6 +1253,7 @@ debug_overlay_fullposition                | 0        | "devonly", "sv"  |
 debug_paint_alpha                         | 0        | "devonly"        | 
 debug_physimpact                          | 0        | "devonly", "sv"  | 
 debug_purchase_defidx                     | cmd      | "cl"             | Purchase an item by defindex
+debug_test_quest_hud                      | 0        | "devonly", "cl"  | Force quest hud to display for a particular quest
 debug_touchlinks                          | 0        | "devonly", "sv"  | Spew touch link activity
 debug_visibility_monitor                  | 0        | "sv", "cheat"    | 
 debugsystemui                             | cmd      | "cheat"          | Show/hide the debug system UI.
@@ -1488,6 +1497,7 @@ foundry_select_entity                     | cmd      | "sv", "cheat"    | Select
 foundry_sync_hammer_view                  | cmd      | "sv", "cheat"    | Move Hammer's 3D view to the same position as the engine's 3D view.
 foundry_update_entity                     | cmd      | "sv", "cheat"    | Updates the entity's position/angles when in edit mode
 fov_cs_debug                              | 0        | "cl", "cheat"    | Sets the view fov if cheats are on.
+fov_tv_debug                              | 0        | "cl"             | Sets the GOTV view custom fov in roaming view.
 fps_max                                   | 300      |                  | Frame rate limiter
 fps_max_menu                              | 120      |                  | Frame rate limiter, main menu
 fps_max_splitscreen                       | 300      | "devonly"        | Frame rate limiter, splitscreen
@@ -1852,6 +1862,7 @@ log_level                                 | cmd      | "norecord"       | Set th
 logaddress_add                            | cmd      |                  | Set address and port for remote host &lt;ip:port&gt;.
 logaddress_add_ex                         | cmd      |                  | Set address and port for remote host &lt;ip:port&gt; and supplies a unique token in the UDP packets.
 logaddress_add_http                       | cmd      | "sv"             | Set URI of a listener to receive logs via http post. Wrap URI in double quotes.
+logaddress_add_http_delayed               | cmd      | "sv"             | Set a delay and URI of a listener to receive logs via http post. Wrap URI in double quotes.
 logaddress_add_ts                         | cmd      |                  | Set address and port for remote host &lt;ip:port&gt; and uses a unique checksum from logaddress_token_secret in the UDP packets.
 logaddress_del                            | cmd      |                  | Remove address and port for remote host &lt;ip:port&gt;.
 logaddress_delall                         | cmd      |                  | Remove all udp addresses being logged to
@@ -2338,6 +2349,7 @@ mp_backup_round_file_last                 |          | "sv"             | Every 
 mp_backup_round_file_pattern              | %prefix%_round%round%.txt | "sv"             | If set then server will save all played rounds information to files named by this pattern, e.g.'%prefix%_%date%_%time%_%team1%_%team2%_%map%_round%round%_score_%score1%_%score2%.txt'
 mp_blockstyle                             | 1        | "devonly", "cl", "rep" | Sets the style of capture point blocking used. 0 = Blocks break captures completely. 1 = Blocks only pause captures.
 mp_bonusroundtime                         | 15       | "devonly", "cl", "rep" | Time after round win until round restarts
+mp_bot_ai_bt                              |          | "sv"             | Use the specified behavior tree file to drive the bot behavior.
 mp_buy_allow_grenades                     | 1        | "cl", "rep"      | Whether players can purchase grenades from the buy menu or not.
 mp_buy_allow_guns                         | 255      | "cl", "rep"      | Whether players can purchase guns: pistols (1), SMGs (2), rifles (4), shotguns (8), sniper rifles (16), heavy MGs (32).
 mp_buy_anywhere                           | 0        | "cl", "nf", "rep" | When set, players can buy anywhere, not only in buyzones. 0 = default. 1 = both teams. 2 = Terrorists. 3 = Counter-Terrorists.
@@ -2447,12 +2459,9 @@ mp_ggtr_num_rounds_autoprogress           | 3        | "cl", "rep"      | Upgrad
 mp_give_player_c4                         | 1        | "cl", "rep"      | Whether this map should spawn a c4 bomb for a player or not.
 mp_global_damage_per_second               | 0.0      | "sv", "rep"      | If above 0, deal non-lethal damage to players over time.
 mp_guardian_bot_money_per_wave            | 800      | "sv", "rep"      | The amount of money bots get time each wave the players complete.  This # is absolute and not additive, the money is set to (this)x(wave#) for each bot on each wave.
-mp_guardian_loc_adjective                 |          | "sv", "rep"      | (If set) kill condition token (#quest_hud_guardian_adjective_&lt;name&gt;)
-mp_guardian_loc_condition                 |          | "sv", "rep"      | (If set) kill condition token (#quest_hud_guardian_condition_&lt;name&gt;)
-mp_guardian_loc_icon                      |          | "sv", "rep"      | (If set) icon to override for guardian mission
-mp_guardian_loc_mission                   | default  | "sv", "rep"      | Token to use to generate guardian mission (#quest_hud_guardian_mission_&lt;name&gt;)
-mp_guardian_loc_override                  |          | "sv", "rep"      | Token to use to display guardian mission (#quest_hud_guardian_override_&lt;name&gt;) (if exists)
-mp_guardian_loc_weapon                    |          | "sv", "rep"      | (If set) weapon name token (#SFUI_WPNHUD_&lt;name&gt;)
+mp_guardian_loc_string_desc               |          | "cl", "rep"      | Loc string token for instructions for this mission, otherwise default to kills with weapon.
+mp_guardian_loc_string_hud                | #guardian_mission_type_kills | "cl", "rep"      | Loc string token to use on hud for this mission, otherwise default to kills with weapon.
+mp_guardian_loc_weapon                    |          | "cl", "rep"      | Override to weapon dialog var applied to UI
 mp_guardian_player_dist_max               | 2000     | "sv", "rep"      | The maximum distance a player is allowed to get from the bombsite before they're killed.
 mp_guardian_player_dist_min               | 1300     | "sv", "rep"      | The distance at which we start to warn a player when they are too far from the guarded bombsite.
 mp_guardian_special_kills_needed          | 10       | "sv", "rep"      | The number of kills needed with a specific weapon.
@@ -2507,7 +2516,7 @@ mp_player_healthbuffer_decay_rate         | 0        | "devonly", "sv", "rep" | 
 mp_playercashawards                       | 1        | "cl", "rep"      | Players can earn money by performing in-game actions
 mp_playerid                               | 0        | "cl", "rep"      | Controls what information player see in the status bar: 0 all names; 1 team names; 2 no names
 mp_playerid_delay                         | 0.4      | "cl", "rep"      | Number of seconds to delay showing information in the status bar
-mp_playerid_hold                          | 0.2      | "cl", "rep"      | Number of seconds to keep showing old information in the status bar
+mp_playerid_hold                          | 0.1      | "cl", "rep"      | Number of seconds to keep showing old information in the status bar
 mp_radar_showall                          | 0        | "cl", "rep"      | Determines who should see all. 0 = default. 1 = both teams. 2 = Terrorists. 3 = Counter-Terrorists.
 mp_randomspawn                            | 0        | "cl", "rep"      | Determines whether players are to spawn. 0 = default; 1 = both teams; 2 = Terrorists; 3 = CTs.
 mp_randomspawn_dist                       | 0        | "cl", "rep"      | If using mp_randomspawn, determines whether to test distance when selecting this spot.
@@ -2552,6 +2561,7 @@ mp_taser_recharge_time                    | -1       | "cl", "rep"      | Determ
 mp_td_dmgtokick                           | 300      | "sv", "rep"      | The damage threshhold players have to exceed in a match to get kicked.
 mp_td_dmgtowarn                           | 200      | "sv", "rep"      | The damage threshhold players have to exceed in a match to get warned that they are about to be kicked.
 mp_td_spawndmgthreshold                   | 50       | "sv", "rep"      | The damage threshold players have to exceed at the start of the round to be warned/kick.
+mp_tdm_healthshot_killcount               | 3        | "cl", "rep"      | Grant healthshots in team deathmatch after n kills
 mp_team_timeout_max                       | 1        | "sv", "cl", "rep" | Number of timeouts each team gets per match.
 mp_team_timeout_time                      | 60       | "sv", "cl", "rep" | Duration of each timeout.
 mp_teamcashawards                         | 1        | "cl", "rep"      | Teams can earn money by performing in-game actions
@@ -2766,6 +2776,10 @@ nb_shadow_dist                            | 400      | "devonly", "cl"  |
 net_allow_multicast                       | 1        | "a"              | 
 net_allow_syslink                         | 1        | "devonly"        | 
 net_blockmsg                              | 0        | "cheat"          | Discards incoming message: &lt;0\|1\|name&gt;
+net_chan_limit_msec                       | 0        |                  | Netchannel processing is limited to so many milliseconds, abort connection if exceeding budget
+net_chan_stats_dump                       | 0        |                  | Netchannel statistics will dump in the logs upon request
+net_chan_stats_dump_top_msgs              | 5        |                  | Netchannel statistics will dump so many top messages in each category
+net_chan_stats_lru                        | 3        |                  | Netchannel statistics LRU accumulation buffer size
 net_channels                              | cmd      |                  | Shows net channel info
 net_chokeloop                             | 0        | "devonly"        | Apply bandwidth choke to loopback packets
 net_client_steamdatagram_enable_override  | 0        | "cl"             | 0: Use connect method requested by GC.  &gt;0: Always use SDR if possible.  &lt;0: Always use direct UDP if possible
@@ -2919,6 +2933,8 @@ panorama_camera_rotate_azimuth_scale      | 0.004    | "devonly", "cl"  |
 panorama_camera_rotate_radius_scale       | 1.0      | "devonly", "cl"  | 
 panorama_dump_deny_input                  | cmd      | "devonly"        | Dumps panels currently denying all input to the game
 panorama_dump_events_backlog              | 0        |                  | 
+panorama_dump_events_threshold_break      | 0        |                  | 
+panorama_dump_events_threshold_us         | 0        |                  | 
 panorama_light_inout_scale                | 0.5      | "devonly", "cl"  | 
 panorama_light_move_scale                 | 0.1      | "devonly", "cl"  | 
 panorama_light_rotate_altitude_scale      | 0.004    | "devonly", "cl"  | 
@@ -2988,7 +3004,7 @@ playcast                                  | cmd      |                  | Play a
 playdemo                                  | cmd      |                  | Play a recorded demo file (.dem ).
 player_botdifflast_s                      | 2        | "cl", "a"        | 
 player_competitive_maplist_2v2_7_0_E8907D2E | mg_de_train,mg_de_lake,mg_de_inferno,mg_de_shortnuke,mg_de_vertigo,mg_gd_rialto,mg_de_shortdust,mg_de_overpass,mg_de_cbble | "cl", "a"        | 
-player_competitive_maplist_8_7_0_CF4B94BE | mg_de_dust2,mg_de_train,mg_de_inferno,mg_de_nuke,mg_de_vertigo,mg_de_mirage,mg_cs_office,mg_de_cache,mg_de_zoo,mg_cs_workout,mg_cs_agency,mg_de_overpass | "cl", "a"        | 
+player_competitive_maplist_8_7_0_1EBBCB77 | mg_de_dust2,mg_de_train,mg_de_inferno,mg_de_nuke,mg_de_vertigo,mg_de_mirage,mg_cs_office,mg_cs_agency,mg_de_overpass | "cl", "a"        | 
 player_debug_print_damage                 | 0        | "sv", "cheat"    | When true, print amount and type of all damage received by player to console.
 player_nevershow_communityservermessage   | 0        | "cl", "a", "ss"  | 
 player_old_armor                          | 0        | "devonly", "sv"  | 
@@ -3789,7 +3805,6 @@ snd_set_master_volume                     | cmd      | "cheat"          | Sets t
 snd_setmixer                              | cmd      | "cheat"          | Set named Mixgroup of current mixer to mix vol, mute, solo.
 snd_setmixlayer                           | cmd      | "cheat"          | Set named Mixgroup of named mix layer to mix vol, mute, solo.
 snd_setmixlayer_amount                    | cmd      | "cheat"          | Set named mix layer mix amount.
-snd_setsoundparam                         | cmd      | "cl"             | Set a sound paramater
 snd_show                                  | 0        | "cheat"          | Show sounds info
 snd_show_channel_count                    | 0        | "devonly"        | Show the current count of channel types.
 snd_show_events                           | 0        | "devonly"        | Logs all sound events that are emitted
@@ -4096,6 +4111,7 @@ sv_dz_autojointeam                        | 1        | "sv"             | Whethe
 sv_dz_cash_bundle_size                    | 50       | "sv", "rep"      | Size of a cash bundle
 sv_dz_contractkill_reward                 | 10       | "sv", "rep"      | Cash bundles to award for a successful contract kill
 sv_dz_enable_respawn                      | 1        | "cl", "rep"      | 
+sv_dz_enable_respawn_solos                | 0        | "cl", "rep"      | 
 sv_dz_exploration_payment_amount          | 2        | "sv", "rep"      | Number of cash bundles to award for exploring a new sector
 sv_dz_exploration_payment_amount_bonus    | 2        | "sv", "rep"      | Number of BONUS cash bundles to award for exploring (if the player has the item/upgrade)
 sv_dz_hostage_rescue_reward               | 18       | "cl", "rep"      | Number of cash bundles to award for rescuing a hostage
@@ -4115,9 +4131,8 @@ sv_dz_show_enemy_name_scope_range         | 800      | "sv"             |
 sv_dz_show_security_door_item_price       | 0        | "devonly", "sv"  | 
 sv_dz_show_weapon_spawns                  | 0        | "devonly", "sv"  | 
 sv_dz_squad_wipe_reward                   | 2        | "cl", "rep"      | Number of cash bundles to award for eliminating a squad
-sv_dz_team_count                          | 1        | "cl", "rep"      | Number of players per team
+sv_dz_team_count                          | 1        | "cl", "rep"      | Max players allowed per team
 sv_dz_warmup_tablet                       | 1        | "sv"             | 
-sv_dz_warmup_weapon                       | weapon_glock | "sv"             | 
 sv_dz_zone_bombdrop_money_reward          | 15       | "cl", "rep"      | How many money stacks players are rewarded each danger zone wave
 sv_dz_zone_bombdrop_money_reward_bonus    | 5        | "cl", "rep"      | How many bonus money stacks players are rewarded each danger zone wave when they have the bonus item
 sv_dz_zone_damage                         | 1        | "sv", "cheat"    | 
@@ -4192,6 +4207,7 @@ sv_hudhint_sound                          | 1        | "devonly", "cl", "rep" |
 sv_ignoregrenaderadio                     | 0        | "sv"             | Turn off Fire in the hole messages
 sv_infinite_ammo                          | 0        | "cl", "rep"      | Player's active weapon will never run out of ammo. If set to 2 then player has infinite total ammo but still has to reload the magazine.
 sv_instancebaselines                      | 1        | "devonly"        | Enable instanced baselines. Saves network overhead.
+sv_invites_only_mainmenu                  | 0        | "cl", "rep"      | If turned on, will ignore all invites when user is playing a match
 sv_jump_impulse                           | 301.993377 | "cl", "rep"      | Initial upward velocity for player jumps; sqrt(2*gravity*height).
 sv_jump_impulse_exojump_multiplier        | 1.05     | "cl", "rep"      | ExoJump impulse multiplier
 sv_kick_ban_duration                      | 15       | "cl", "nf", "rep" | How long should a kick ban from the server should last (in minutes)
@@ -4326,6 +4342,7 @@ sv_replaybots                             | 1        |                  | If set
 sv_reservation_grace                      | 5        | "devonly"        | Time in seconds given for a lobby reservation.
 sv_reservation_tickrate_adjustment        | 0        |                  | Adjust server tickrate upon reservation
 sv_reservation_timeout                    | 45       |                  | Time in seconds before lobby reservation expires.
+sv_rethrow_last_grenade                   | cmd      | "sv", "cheat"    | Emit the last grenade thrown on the server.
 sv_reward_drop_delay                      | 3.0      | "devonly", "cl", "rep" | Delay between the end match scoreboard being shown and the beginning of item drops.
 sv_rollangle                              | 0        | "devonly", "cl", "nf", "rep" | Max view roll angle
 sv_rollspeed                              | 200      | "devonly", "cl", "nf", "rep" | 
@@ -4554,6 +4571,7 @@ tv_broadcast_max_requests                 | 20       |                  | Max nu
 tv_broadcast_max_requests1                | 20       |                  | Max number of broadcast1 http requests in flight. If there is a network issue, the requests may start piling up, degrading server performance. If more than the specified number of requests are in flight, the new requests are dropped.
 tv_broadcast_origin_auth                  | gocastauth | "hidden"         | X-Origin-Auth header of the broadcast POSTs
 tv_broadcast_origin_auth1                 | gocastauth | "hidden"         | X-Origin-Auth header of the broadcast1 POSTs
+tv_broadcast_origin_delay                 | 0        | "hidden"         | Injection delay request for CDN rebroadcast frameworks, seconds
 tv_broadcast_resend                       | cmd      |                  | resend broadcast data to broadcast relay
 tv_broadcast_startup_resend_interval      | 10       |                  | The interval, in seconds, of re-sending startup data to the broadcast relay server (useful in case relay crashes, restarts or startup data http request fails)
 tv_broadcast_status                       | cmd      |                  | Print out broadcast status
@@ -4588,7 +4606,7 @@ tv_password                               |          | "prot", "nf", "norecord" 
 tv_playcast_delay_prediction              | 1        |                  | 
 tv_playcast_delay_resync                  | 0        |                  | To alleviate intermittent network connectivity problems, this is the number of seconds to wait before actually re-syncing the stream after failure
 tv_playcast_max_rcvage                    | 15       | "hidden"         | 
-tv_playcast_max_rtdelay                   | 55       | "hidden"         | 
+tv_playcast_max_rtdelay                   | 300      | "hidden"         | 
 tv_playcast_origin_auth                   |          | "hidden"         | Get request X-Origin-Auth string
 tv_playcast_retry_timeout                 | 12       |                  | In case of intermittent network problems, how long should playcast retry fragment retrieval before resorting to resync
 tv_port                                   | 27020    |                  | Host GOTV\[0\] port
@@ -4600,6 +4618,7 @@ tv_relayradio                             | 0        | "sv"             | Relay 
 tv_relaytextchat                          | 1        | "sv"             | Relay text chat data: 0=off, 1=say, 2=say+say_team
 tv_relayvoice                             | 1        |                  | Relay voice data: 0=off, 1=on
 tv_retry                                  | cmd      |                  | Reconnects the GOTV relay proxy 
+tv_secure_bypass                          | 0        |                  | Bypass secure challenge on GOTV port
 tv_snapshotrate                           | 32       | "rep"            | Snapshots broadcasted per second
 tv_snapshotrate1                          | 32       |                  | Snapshots broadcasted per second, GOTV\[1\]
 tv_spectator_port_offset                  | 0        | "cl"             | 
@@ -4618,7 +4637,6 @@ ui_loading_tip_f2                         | 0.40     | "devonly", "cl"  |
 ui_loading_tip_refresh                    | 5        | "devonly", "cl"  | 
 ui_lobby_draft_enabled                    |          | "cl"             | 
 ui_nearbylobbies_filter2                  | competitive | "cl", "a"        | 
-ui_new_events_alert_seen                  | 0        | "cl", "a"        | 
 ui_playsettings_maps_listen_casual        | random_classic | "cl", "a"        | 
 ui_playsettings_maps_listen_competitive   | random_classic | "cl", "a"        | 
 ui_playsettings_maps_listen_deathmatch    | random_classic | "cl", "a"        | 
@@ -4628,7 +4646,7 @@ ui_playsettings_maps_official_casual      | mg_casualsigma | "cl", "a"        |
 ui_playsettings_maps_official_deathmatch  | mg_casualsigma | "cl", "a"        | 
 ui_playsettings_maps_workshop             |          | "cl", "a"        | 
 ui_playsettings_mode_listen               | casual   | "cl", "a"        | 
-ui_playsettings_mode_official_dz          | survival | "cl", "a"        | 
+ui_playsettings_mode_official_x19         |          | "cl", "a"        | 
 ui_playsettings_survival_solo             | 0        | "cl", "a"        | 
 ui_playsettings_warmup_map_name           | de_mirage | "cl", "a"        | 
 ui_popup_weaponupdate_version             | 0        | "cl", "a"        | 
@@ -4642,7 +4660,7 @@ ui_store_scaleform                        | 1        | "devonly", "cl", "hidden"
 ui_test_community_matchmaking             | 0        | "devonly", "cl"  | 
 ui_vanitysetting_itemid                   |          | "cl", "a"        | 
 ui_vanitysetting_loadoutslot              |          | "cl", "a"        | 
-ui_vanitysetting_model2                   | models/player/custom_player/legacy/tm_jumpsuit_variantc.mdl | "cl", "a"        | 
+ui_vanitysetting_model2                   | models/player/custom_player/legacy/tm_jumpsuit_varianta.mdl | "cl", "a"        | 
 ui_vanitysetting_team                     |          | "cl", "a"        | 
 ui_volume_scale                           | 1.0      | "devonly"        | 
 unbind                                    | cmd      |                  | Unbind a key.
@@ -4843,7 +4861,7 @@ weapon_debug_spread_gap                   | 0.67     | "cl", "cheat", "ss" |
 weapon_debug_spread_show                  | 0        | "cl", "cheat", "ss" | Enables display of weapon accuracy; 1: show accuracy box, 3: show accuracy with dynamic crosshair
 weapon_land_dip_amt                       | 20.0     | "devonly", "cl", "rep", "cheat" | The amount the gun should dip when the player lands after a jump.
 weapon_max_before_cleanup                 | 0        | "cl"             | If set to non-zero, will remove the oldest dropped weapon to maintain the specified number of dropped weapons in the world.
-weapon_molotov_maxdetonateslope           | 30.0     | "devonly", "sv", "rep" | Maximum angle of slope on which the molotov will detonate
+weapon_molotov_maxdetonateslope           | 30.0     | "devonly", "cl", "rep" | Maximum angle of slope on which the molotov will detonate
 weapon_near_empty_sound                   | 1        | "cl", "rep", "cheat" | 
 weapon_recoil_cooldown                    | 0.55     | "cl", "rep", "cheat" | DEPRECATED. Recoil now decays using weapon_recoil_decay_coefficient
 weapon_recoil_decay1_exp                  | 3.5      | "cl", "rep", "cheat" | Decay factor exponent for weapon recoil
@@ -4857,7 +4875,7 @@ weapon_recoil_suppression_shots           | 4        | "cl", "rep", "cheat" | Nu
 weapon_recoil_variance                    | 0.55     | "cl", "rep", "cheat" | Amount of variance per recoil impulse
 weapon_recoil_vel_decay                   | 4.5      | "cl", "rep", "cheat" | Decay factor for weapon recoil velocity
 weapon_recoil_view_punch_extra            | 0.055    | "cl", "rep", "cheat" | Additional (non-aim) punch added to view from recoil
-weapon_reticle_knife_show                 | 0        | "cl", "rep"      | When enabled will show knife reticle on clients. Used for game modes requiring target id display when holding a knife.
+weapon_reticle_knife_show                 | 1        | "cl", "rep"      | When enabled will show knife reticle on clients. Used for game modes requiring target id display when holding a knife.
 weapon_showproficiency                    | 0        | "devonly", "sv"  | 
 weapon_sound_falloff_multiplier           | 1.0      | "cl", "rep", "cheat" | Scaling for falloff of weapon firing sounds
 webapi_values_init_buffer_size_0          | 65536    | "devonly", "cl"  | Initial buffer size for buffers in the WebAPIValues buffer pool
