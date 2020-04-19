@@ -1,8 +1,8 @@
 ```
 ] version
-Protocol version 13729 [1024/1024]
-Exe version 1.37.2.9 (csgo)
-Exe build: 21:43:49 Nov 14 2019 (7621) (730)
+Protocol version 13748 [1097/1097]
+Exe version 1.37.4.8 (csgo)
+Exe build: 14:10:24 Mar 19 2020 (7803) (730)
 Windows version 6.2
 ```
 
@@ -459,6 +459,7 @@ ammo_grenade_limit_total                  | 3        | "cl", "rep"      |
 ammo_item_limit_healthshot                | 4        | "cl", "rep"      | 
 anim_3wayblend                            | 1        | "devonly", "cl", "rep" | Toggle the 3-way animation blending code.
 anim_twistbones_enabled                   | 0        | "cl", "rep", "cheat" | Enable procedural twist bones.
+apply_crosshair_code                      | cmd      | "cl"             | Apply a crosshair code to the current crosshair settings.
 askconnect_accept                         | cmd      | "norecord"       | Accept a redirect request by the server.
 asw_engine_finished_building_map          | cmd      |                  | Notify engine that we've finished building a map
 asw_perf_wtf                              | 0        | "devonly", "cl"  | Disable updating of projected shadow textures from UpdateLight
@@ -718,6 +719,8 @@ cl_bot_difficulty_ps3move                 | 0        | "devonly", "cl", "hidden"
 cl_bot_difficulty_sharpshooter            | 0        | "devonly", "cl", "hidden" | Bot difficulty while playing with SharpShooter device
 cl_brushfastpath                          | 1        | "cl", "cheat"    | 
 cl_burninggibs                            | 0        | "devonly", "cl"  | A burning player that gibs has burning gibs.
+cl_buywheel_nomousecentering              | 0        | "cl", "a", "ss"  | Set non-zero to prevent buy wheel from centering mouse into the wheel origin
+cl_buywheel_nonumberpurchasing            | 0        | "cl", "a", "ss"  | Set non-zero to prevent buy wheel from purchasing via number keys
 cl_cam_driver_compensation_scale          | 0.75     | "cl"             | 
 cl_camera_follow_bone_index               | -2       | "cl", "cheat"    | Index of the bone to follow.  -2 == disabled.  -1 == root bone.  0+ is bone index.
 cl_camera_height_restriction_debug        | 0        | "cl", "rep", "cheat" | 
@@ -750,7 +753,7 @@ cl_crosshair_dynamic_splitalpha_innermod  | 1        | "cl", "a", "ss"  | If usi
 cl_crosshair_dynamic_splitalpha_outermod  | 0.5      | "cl", "a", "ss"  | If using cl_crosshairstyle 2, this is the alpha modification that will be used for the OUTER crosshair pips once they've split. \[0.3 - 1\]
 cl_crosshair_dynamic_splitdist            | 7        | "cl", "a", "ss"  | If using cl_crosshairstyle 2, this is the distance that the crosshair pips will split into 2. (default is 7)
 cl_crosshair_friendly_warning             | 1        | "cl", "a"        | 0: always off, 1: only on default crosshair styles, 2: always on
-cl_crosshair_outlinethickness             | 1        | "cl", "a", "ss"  | Set how thick you want your crosshair outline to draw (0.1-3)
+cl_crosshair_outlinethickness             | 1        | "cl", "a", "ss"  | Set how thick you want your crosshair outline to draw (0-3)
 cl_crosshair_recoil                       | 0        | "cl", "cheat"    | Recoil/aimpunch will move the user's crosshair to show the effect
 cl_crosshair_sniper_show_normal_inaccuracy | 0        | "cl", "a", "ss"  | Include standing inaccuracy when determining sniper crosshair blur
 cl_crosshair_sniper_width                 | 1        | "cl", "a", "ss"  | If &gt;1 sniper scope cross lines gain extra width (1 for single-pixel hairline)
@@ -763,7 +766,6 @@ cl_crosshaircolor_r                       | 50       | "cl", "a", "ss"  |
 cl_crosshairdot                           | 1        | "cl", "a", "ss"  | 
 cl_crosshairgap                           | 1        | "cl", "a", "ss"  | 
 cl_crosshairgap_useweaponvalue            | 0        | "cl", "a", "ss"  | If set to 1, the gap will update dynamically based on which weapon is currently equipped
-cl_crosshairscale                         | 0        | "cl", "a", "ss"  | Crosshair scaling factor (deprecated)
 cl_crosshairsize                          | 5        | "cl", "a", "ss"  | 
 cl_crosshairstyle                         | 2        | "cl", "a", "ss"  | 0 = DEFAULT, 1 = DEFAULT STATIC, 2 = ACCURATE SPLIT (accurate recoil/spread feedback with a fixed inner part), 3 = ACCURATE DYNAMIC (accurate recoil/spread feedback), 4 = CLASSIC STATIC, 5 = OLD CS STYLE (fake recoil - inaccurate feedback)
 cl_crosshairthickness                     | 0.5      | "cl", "a", "ss"  | 
@@ -886,7 +888,7 @@ cl_fastdetailsprites                      | 1        | "cl", "cheat"    | whethe
 cl_fasttempentcollision                   | 5        | "devonly", "cl"  | 
 cl_find_ent                               | cmd      | "cl", "cheat"    | Find and list all client entities with classnames that contain the specified substring.<br>Format: cl_find_ent &lt;substring&gt;<br>
 cl_find_ent_index                         | cmd      | "cl", "cheat"    | Display data for clientside entity matching specified index.<br>Format: cl_find_ent_index &lt;index&gt;<br>
-cl_fixedcrosshairgap                      | 3        | "cl", "a", "ss"  | How big to make the gap between the pips in the fixed crosshair
+cl_fixedcrosshairgap                      | 3        | "cl", "a", "ss"  | For crosshair style 1: How big to make the gap between the pips in the fixed crosshair
 cl_flushentitypacket                      | 0        | "cheat"          | For debugging. Force the engine to flush an entity packet.
 cl_foot_contact_shadows                   | 1        | "cl"             | 
 cl_force_progress_notice_every_change     | 0        | "devonly", "cl"  | 
@@ -961,8 +963,9 @@ cl_motd_competitive_timeout               | 80       | "devonly", "cl"  | Compet
 cl_mouseenable                            | 1        | "devonly", "cl"  | 
 cl_mouseenable_buttons                    | 0        | "devonly", "cl"  | 
 cl_mouselook                              | 1        | "cl", "a", "ss"  | Set to 1 to use mouse for look, 0 for keyboard look. Cannot be set while connected to a server.
-cl_mute_all_but_friends_and_party         | 0        | "cl", "a"        | Only allow communication from friends and matchmaking party members. Doesn't apply to competitive matchmaking games.
+cl_mute_all_but_friends_and_party         | 0        | "cl", "a"        | Only allow communication from friends and matchmaking party members. Set to 1 to apply the in non-competitive game modes. Set to 2 will apply the setting in all modes.<br>
 cl_mute_enemy_team                        | 0        | "cl", "a"        | Block all communication from players on the enemy team.
+cl_mute_player_after_reporting_abuse      | 1        | "devonly", "cl"  | Mute players reported for abuse automatically.
 cl_names_debug                            | 0        | "devonly", "cl"  | 
 cl_obs_interp_angle_progress_headstart    | 0.025    | "devonly", "cl"  | 
 cl_obs_interp_dist_to_turn_to_face        | 500      | "devonly", "cl"  | Changing to a target further than this will cause the camera to face the direction of travel
@@ -1057,9 +1060,9 @@ cl_resend_timeout                         | 60       |                  | Total 
 cl_retire_low_priority_lights             | 0        | "devonly"        | Low priority dlights are replaced by high priority ones
 cl_righthand                              | 1        | "cl", "a", "ss"  | Use right-handed view models.
 cl_rumblescale                            | 1.0      | "cl", "a", "ss"  | Scale sensitivity of rumble effects (0 to 1.0)
+cl_sanitize_muted_players                 | 1        | "devonly", "cl"  | Hide names and avatars of muted players.
 cl_sanitize_player_names                  | 0        | "cl", "a"        | Replace names of other players with something non-offensive.
 cl_savescreenshotstosteam                 | 0        | "devonly", "hidden" | Saves screenshots to the Steam's screenshot library
-cl_scalecrosshair                         | 1        | "cl", "a", "ss"  | Enable crosshair scaling (deprecated)
 cl_scoreboard_mouse_enable_binding        | +attack2 | "cl", "a"        | Name of the binding to enable mouse selection in the scoreboard
 cl_scoreboard_survivors_always_on         | 0        | "cl", "a"        | 
 cl_screenshotlocation                     |          | "devonly", "hidden" | Location to tag the screenshot with
@@ -1077,6 +1080,7 @@ cl_show_enemy_avatar_colors               | 1        | "devonly", "cl"  |
 cl_show_equipment_value                   | 0        | "devonly", "cl"  | 
 cl_show_matchmaking_stat_spew             | 0        | "devonly", "cl"  | 
 cl_show_new_hint_delay                    | 10.0     | "devonly", "cl"  | 
+cl_show_observer_crosshair                | 1        | "cl", "a"        | Show the crosshair of the player being observed. 0: off 1: friends and party 2: everyone 
 cl_show_playernames_max_chars_console     | 0        | "devonly", "cl"  | Shows all player names (including bots) as 16 W's.
 cl_show_quest_info                        | 0        | "devonly", "cl"  | 
 cl_show_splashes                          | 1        | "devonly", "cl"  | 
@@ -1171,7 +1175,7 @@ cl_view                                   | cmd      | "cheat"          | Set th
 cl_viewmodel_shift_left_amt               | 1.5      | "cl", "a"        | The amount the viewmodel shifts to the left when shooting accuracy increases.
 cl_viewmodel_shift_right_amt              | 0.75     | "cl", "a"        | The amount the viewmodel shifts to the right when shooting accuracy decreases.
 cl_voice_buffer_time                      | 0.04     | "devonly"        | Amount of time between receiving voice data and playing the audio
-cl_voice_filter                           |          | "devonly"        | Filter voice by name substring
+cl_voice_filter                           |          |                  | Filter voice traffic, e.g.: 'steamids:765123,765456,7651244'
 cl_voice_hltv_buffer_time                 | 0.3      | "devonly"        | Amount of time between receiving voice data and playing the audio in hltv
 cl_voip_lobby_audio_volume                | 0        | "devonly", "cl", "hidden" | Lobby voip stream audio volume
 cl_weapon_clip_thinwalls                  | 1        | "cl", "rep", "cheat" | 
@@ -1180,7 +1184,7 @@ cl_weapon_clip_thinwalls_lock             | 0        | "cl", "rep", "cheat" |
 cl_weapon_debug_print_accuracy            | 0        | "cl", "cheat"    | 
 cl_weapon_debug_show_accuracy             | 0        | "cl", "cheat"    | Draws a circle representing the effective range with every shot.
 cl_weapon_debug_show_accuracy_duration    | 10       | "cl", "cheat"    | 
-cl_weapon_pickup_lerp                     | 0        | "devonly", "cl"  | 
+cl_weapon_pickup_lerp                     | 2        | "devonly", "cl"  | 
 cl_winddir                                | 0        | "cl", "cheat"    | Weather effects wind direction angle
 cl_windspeed                              | 0        | "cl", "cheat"    | Weather effects wind speed scalar
 cl_wpn_sway_interp                        | 0.1      | "devonly", "cl"  | 
@@ -1547,9 +1551,9 @@ foundry_sync_hammer_view                  | cmd      | "sv", "cheat"    | Move H
 foundry_update_entity                     | cmd      | "sv", "cheat"    | Updates the entity's position/angles when in edit mode
 fov_cs_debug                              | 0        | "cl", "cheat"    | Sets the view fov if cheats are on.
 fov_tv_debug                              | 0        | "cl"             | Sets the GOTV view custom fov in roaming view.
-fps_max                                   | 300      |                  | Frame rate limiter
+fps_max                                   | 400      |                  | Frame rate limiter
 fps_max_menu                              | 120      |                  | Frame rate limiter, main menu
-fps_max_splitscreen                       | 300      | "devonly"        | Frame rate limiter, splitscreen
+fps_max_splitscreen                       | 400      | "devonly"        | Frame rate limiter, splitscreen
 fps_screenshot_frequency                  | 10       | "cheat"          | While the fps is below the threshold we will dump a screen shot this often in seconds (i.e. 10 = screen shot every 10 seconds when under the given fps.)
 fps_screenshot_threshold                  | -1       | "cheat"          | Dump a screenshot when the FPS drops below the given value.
 free_pass_peek_debug                      | 0        | "devonly", "sv"  | 
@@ -1672,6 +1676,7 @@ hideoverviewmap                           | cmd      | "cl"             | Hides 
 hidepanel                                 | cmd      | "cl"             | Hides a viewport panel &lt;name&gt;
 hideradar                                 | cmd      | "cl"             | Hides HUD radar
 hidescores                                | cmd      | "cl"             | Forcibly hide score panel
+highlight_patch                           | cmd      | "devonly", "cl", "cheat" | 
 highlight_sticker                         | cmd      | "devonly", "cl", "cheat" | 
 hl2_episodic                              | 0        | "devonly", "cl", "rep" | 
 hltv_replay_status                        | cmd      |                  | Show Killer Replay status and some statistics, works on listen or dedicated server.
@@ -2399,6 +2404,7 @@ mp_backup_round_file_pattern              | %prefix%_round%round%.txt | "sv"    
 mp_blockstyle                             | 1        | "devonly", "cl", "rep" | Sets the style of capture point blocking used. 0 = Blocks break captures completely. 1 = Blocks only pause captures.
 mp_bonusroundtime                         | 15       | "devonly", "cl", "rep" | Time after round win until round restarts
 mp_bot_ai_bt                              |          | "sv"             | Use the specified behavior tree file to drive the bot behavior.
+mp_bot_ai_bt_clear_cache                  | cmd      | "sv"             | Clears the cache for behavior tree files.
 mp_buy_allow_grenades                     | 1        | "cl", "rep"      | Whether players can purchase grenades from the buy menu or not.
 mp_buy_allow_guns                         | 255      | "cl", "rep"      | Whether players can purchase guns: pistols (1), SMGs (2), rifles (4), shotguns (8), sniper rifles (16), heavy MGs (32).
 mp_buy_anywhere                           | 0        | "cl", "nf", "rep" | When set, players can buy anywhere, not only in buyzones. 0 = default. 1 = both teams. 2 = Terrorists. 3 = Counter-Terrorists.
@@ -2510,13 +2516,20 @@ mp_ggtr_last_weapon_kill_ends_half        | 0        | "cl", "rep"      | End th
 mp_ggtr_num_rounds_autoprogress           | 3        | "cl", "rep"      | Upgrade the player's weapon after this number of rounds without upgrading
 mp_give_player_c4                         | 1        | "cl", "rep"      | Whether this map should spawn a c4 bomb for a player or not.
 mp_global_damage_per_second               | 0.0      | "sv", "rep"      | If above 0, deal non-lethal damage to players over time.
+mp_guardian_add_bounds_pt                 | cmd      | "sv"             | mp_guardian_add_bounds_pt
 mp_guardian_bot_money_per_wave            | 800      | "sv", "rep"      | The amount of money bots get time each wave the players complete.  This # is absolute and not additive, the money is set to (this)x(wave#) for each bot on each wave.
+mp_guardian_clear_all_bounds              | cmd      | "sv"             | mp_guardian_clear_all_bounds
+mp_guardian_draw_bounds                   | 0        | "devonly", "sv"  | 
+mp_guardian_emit_bounds_config            | cmd      | "sv"             | mp_guardian_emit_bounds_config
 mp_guardian_force_collect_hostages_timeout | 50       | "sv"             | Force bots to collect hostages after this amount of time if no enemy has been seen.
+mp_guardian_give_random_grenades_to_bots  | 1        | "sv"             | If set guardian bots will be given grenades at the beginning of the wave.
 mp_guardian_loc_string_desc               |          | "cl", "rep"      | Loc string token for instructions for this mission, otherwise default to kills with weapon.
 mp_guardian_loc_string_hud                | #guardian_mission_type_kills | "cl", "rep"      | Loc string token to use on hud for this mission, otherwise default to kills with weapon.
 mp_guardian_loc_weapon                    |          | "cl", "rep"      | Override to weapon dialog var applied to UI
+mp_guardian_new_bounds                    | cmd      | "sv"             | mp_guardian_new_bounds
 mp_guardian_player_dist_max               | 2000     | "sv", "rep"      | The maximum distance a player is allowed to get from the bombsite before they're killed.
 mp_guardian_player_dist_min               | 1300     | "sv", "rep"      | The distance at which we start to warn a player when they are too far from the guarded bombsite.
+mp_guardian_shoot_point                   | cmd      | "sv"             | mp_guardian_shoot_point
 mp_guardian_special_kills_needed          | 10       | "sv", "rep"      | The number of kills needed with a specific weapon.
 mp_guardian_special_weapon_needed         | awp      | "sv", "rep"      | The weapon that needs to be used to increment the kills needed to complete the mission.
 mp_guardian_target_site                   | -1       | "sv"             | If set to the index of a bombsite, will cause random spawns to be only created near that site.
@@ -2602,6 +2615,7 @@ mp_stalemate_enable                       | 0        | "devonly", "sv", "nf" | E
 mp_stalemate_timelimit                    | 240      | "devonly", "sv", "rep" | Timelimit (in seconds) of the stalemate round.
 mp_starting_losses                        | 0        | "sv", "rep"      | Determines what the initial loss streak is.
 mp_startmoney                             | 800      | "cl", "rep"      | amount of money each player gets when they reset
+mp_suicide_penalty                        | 1        | "sv"             | Punish players for suicides
 mp_suicide_time                           | 5        | "sv", "rep", "cheat" | Specifies number of seconds required to wait before another suicide.
 mp_swapteams                              | cmd      | "sv"             | Swap the teams and restart the game
 mp_switchteams                            | cmd      | "sv"             | Switch teams and restart the game
@@ -2895,6 +2909,7 @@ net_threaded_socket_burst_cap             | 1024     |                  | Max nu
 net_threaded_socket_recovery_rate         | 6400     |                  | Number of packets per second that threaded socket pump algorithm allows from client.
 net_threaded_socket_recovery_time         | 60       |                  | Number of seconds over which the threaded socket pump algorithm will fully recover client ratelimit.
 net_usesocketsforloopback                 | 0        | "devonly"        | Use network sockets layer even for listen server local player's packets (multiplayer only).
+net_warningthrottle                       | 5        |                  | Network warning throttling to specified Hz rate
 next                                      | 0        | "cheat"          | Set to 1 to advance to next frame ( when singlestep == 1 )
 nextdemo                                  | cmd      |                  | Play next demo in sequence.
 nextlevel                                 |          | "cl", "nf", "rep" | If set to a valid map name, will trigger a changelevel to the specified map at the end of the round
@@ -3029,16 +3044,16 @@ play_hrtf                                 | cmd      |                  | Play a
 playcast                                  | cmd      |                  | Play a broadcast
 playdemo                                  | cmd      |                  | Play a recorded demo file (.dem ).
 player_botdifflast_s                      | 2        | "cl", "a"        | 
-player_competitive_maplist_2v2_8_1_E8907D2E | mg_de_train,mg_de_lake,mg_de_inferno,mg_de_shortnuke,mg_de_vertigo,mg_gd_rialto,mg_de_shortdust,mg_de_overpass,mg_de_cbble | "cl", "a"        | 
-player_competitive_maplist_8_8_1_475B5511 | mg_de_dust2,mg_de_train,mg_de_inferno,mg_de_nuke,mg_de_vertigo,mg_de_mirage,mg_cs_office,mg_de_cache,mg_cs_agency,mg_de_overpass | "cl", "a"        | 
+player_competitive_maplist_2v2_8_0_E8907D2E | mg_de_train,mg_de_lake,mg_de_inferno,mg_de_shortnuke,mg_de_vertigo,mg_gd_rialto,mg_de_shortdust,mg_de_overpass,mg_de_cbble | "cl", "a"        | 
+player_competitive_maplist_8_8_0_1B1D6577 | mg_de_dust2,mg_de_train,mg_de_inferno,mg_de_nuke,mg_de_vertigo,mg_de_mirage,mg_cs_office,mg_de_cache,mg_de_anubis,mg_de_chlorine,mg_cs_agency,mg_de_overpass | "cl", "a"        | 
 player_debug_print_damage                 | 0        | "sv", "cheat"    | When true, print amount and type of all damage received by player to console.
 player_nevershow_communityservermessage   | 0        | "cl", "a", "ss"  | 
 player_old_armor                          | 0        | "devonly", "sv"  | 
 player_ping                               | cmd      | "sv", "print"    | Creates a ping notification where the player is looking.
 player_ping_throttle_decay                | 0.58     | "sv", "cheat"    | Decay for how fast the ping throttle delay will decay
-player_survival_list_8_1_7                | mg_dz_blacksite,mg_dz_sirocco,mg_dz_junglety | "cl", "a"        | 
+player_survival_list_8_0_7                | mg_dz_blacksite,mg_dz_sirocco,mg_dz_junglety | "cl", "a"        | 
 player_teamplayedlast                     | 3        | "cl", "a", "ss"  | 
-player_wargames_list2_8_1_604             | mg_skirmish_flyingscoutsman,mg_skirmish_armsrace,mg_skirmish_demolition | "cl", "a"        | 
+player_wargames_list2_8_0_604             | mg_skirmish_flyingscoutsman,mg_skirmish_armsrace,mg_skirmish_demolition | "cl", "a"        | 
 playflush                                 | cmd      |                  | Play a sound, reloading from disk in case of changes.
 playgamesound                             | cmd      | "cl", "cheat"    | Play a sound from the game sounds txt file
 playoverwatchevidence                     | cmd      | "hidden"         | Play evidence for an overwatch case.
@@ -3706,7 +3721,6 @@ snd_deathcamera_volume                    | 1.0      | "a"              | Relati
 snd_debug_gaincurve                       | 0        | "devonly"        | Visualize sound gain fall off
 snd_debug_gaincurvevol                    | 1.0      | "devonly"        | Visualize sound gain fall off
 snd_debug_panlaw                          | 0        | "cheat"          | Visualize panning crossfade curves
-snd_debug_sleep                           | cmd      |                  | 
 snd_defer_trace                           | 1        | "devonly"        | 
 snd_delay_for_choreo_enabled              | 1        | "devonly"        | Enables update of delay for choreo to compensate for IO latency.
 snd_delay_for_choreo_reset_after_N_milliseconds | 500      | "devonly"        | Resets the choreo latency after N milliseconds of VO not playing. Default is 500 ms.
@@ -3986,6 +4000,8 @@ spec_replay_winddown_time                 | 2        | "sv"             | The tr
 spec_show_xray                            | 0        | "cl", "a"        | If set to 1, you can see player outlines and name IDs through walls - who you can see depends on your team and mode
 spec_track                                | 0        | "devonly", "cl"  | Tracks an entity in spec mode
 spec_usenumberkeys_nobinds                | 1        | "cl", "a"        | If set to 1, map voting and spectator view use the raw number keys instead of the weapon binds (slot1, slot2, etc).
+spec_xray_dropped_defusekits              | 0        | "cl"             | Whether to X-ray dropped defuse kits.
+spec_xray_dropped_unoccluded              | 0        | "cl"             | Whether to always X-ray dropped c4 and defuse kits.
 spike                                     | cmd      | "cheat"          | generates a fake spike
 spincycle                                 | cmd      | "cheat"          | Cause the engine to spincycle (Debug!!)
 ss_connect                                | cmd      | "devonly"        | If connected with available split screen slots, connects a split screen player to this machine.
@@ -4147,6 +4163,7 @@ sv_dumpstringtables                       | 0        | "cheat"          |
 sv_duplicate_playernames_ok               | 0        | "rep"            | When enabled player names won't have the (#) in front of their names its the same as another player.
 sv_dz_autojointeam                        | 1        | "sv"             | Whether players are automatically assigned a DZ team
 sv_dz_cash_bundle_size                    | 50       | "sv", "rep"      | Size of a cash bundle
+sv_dz_cash_mega_bundle_size               | 13       | "sv", "rep"      | Size of a mega cash bundle
 sv_dz_contractkill_reward                 | 10       | "sv", "rep"      | Cash bundles to award for a successful contract kill
 sv_dz_enable_respawn                      | 1        | "cl", "rep"      | 
 sv_dz_enable_respawn_solos                | 0        | "cl", "rep"      | 
@@ -4325,6 +4342,7 @@ sv_mmqueue_reservation_timeout            | 21       | "devonly"        | Time i
 sv_multiplayer_maxtempentities            | 32       | "devonly"        | 
 sv_multiplayer_sounds                     | 20       | "devonly"        | 
 sv_mumble_positionalaudio                 | 1        | "devonly", "cl", "rep" | Allows players using Mumble to have support for positional audio.
+sv_mute_players_with_social_penalties     | 1        | "devonly", "sv"  | 
 sv_netvisdist                             | 10000    | "devonly", "sv", "cheat" | Test networking visibility distance
 sv_new_delta_bits                         | 1        | "devonly"        | 
 sv_noclipaccelerate                       | 5        | "cl", "a", "nf", "rep" | 
@@ -4624,6 +4642,7 @@ tv_broadcast_origin_auth                  | gocastauth | "hidden"         | X-Or
 tv_broadcast_origin_auth1                 | gocastauth | "hidden"         | X-Origin-Auth header of the broadcast1 POSTs
 tv_broadcast_origin_delay                 | 0        | "hidden"         | Injection delay request for CDN rebroadcast frameworks, seconds
 tv_broadcast_resend                       | cmd      |                  | resend broadcast data to broadcast relay
+tv_broadcast_server_info_message_size_kb  | 512      |                  | The size, in KB, of the server info message size for tv broadcasts.
 tv_broadcast_startup_resend_interval      | 10       |                  | The interval, in seconds, of re-sending startup data to the broadcast relay server (useful in case relay crashes, restarts or startup data http request fails)
 tv_broadcast_status                       | cmd      |                  | Print out broadcast status
 tv_broadcast_terminate                    | 1        | "hidden"         | Terminate every broadcast with a stop command
@@ -4687,7 +4706,7 @@ ui_loading_tip_f1                         | 0.05     | "devonly", "cl"  |
 ui_loading_tip_f2                         | 0.40     | "devonly", "cl"  | 
 ui_loading_tip_refresh                    | 5        | "devonly", "cl"  | 
 ui_lobby_draft_enabled                    |          | "cl"             | 
-ui_nearbylobbies_filter2                  | competitive | "cl", "a"        | 
+ui_nearbylobbies_filter3                  | competitive | "cl", "a"        | 
 ui_news_last_read_link                    |          | "cl", "a"        | 
 ui_playsettings_maps_listen_casual        | random_classic | "cl", "a"        | 
 ui_playsettings_maps_listen_competitive   | random_classic | "cl", "a"        | 
@@ -4905,6 +4924,7 @@ wc_link_edit                              | cmd      | "sv", "cheat"    |
 weapon_accuracy_forcespread               | 0        | "cl", "rep"      | Force spread to the specified value.
 weapon_accuracy_logging                   | 0        | "devonly", "cl", "a", "rep" | 
 weapon_accuracy_nospread                  | 0        | "cl", "rep"      | Disable weapon inaccuracy spread
+weapon_accuracy_reset_on_deploy           | 0        | "cl", "rep", "cheat" | On deploy, forcibly reset weapon accuracy to zero.
 weapon_accuracy_shotgun_spread_patterns   | 1        | "cl", "rep"      | 
 weapon_air_spread_scale                   | 1.0      | "cl", "rep"      | Scale factor for jumping inaccuracy, set to 0 to make jumping accuracy equal to standing
 weapon_auto_cleanup_time                  | 0        | "cl"             | If set to non-zero, weapons will delete themselves after the specified time (in seconds) if no players are near.
