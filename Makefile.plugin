@@ -1,4 +1,4 @@
-override NAME = serverplugin
+NAME = cvar-unhide
 
 PLUGIN_SRC_DIR = $(SRC_DIR)/..
 PUBLIC_SRC_DIR = $(SRC_DIR)/public
@@ -6,11 +6,11 @@ TIER0_PUBLIC_SRC_DIR = $(SRC_DIR)/public/tier0
 TIER1_PUBLIC_SRC_DIR = $(SRC_DIR)/public/tier1
 INTERFACES_PUBLIC_SRC_DIR = $(SRC_DIR)/public/interfaces
 
-PLUGIN_OBJ_DIR = $(BUILD_OBJ_DIR)/serverplugin_$(ARCH)
+PLUGIN_OBJ_DIR = $(BUILD_OBJ_DIR)/$(NAME)_$(ARCH)
 TIER0_OBJ_DIR = $(PLUGIN_OBJ_DIR)/tier0
 
 INCLUDEDIRS = -I$(PUBLIC_SRC_DIR) -I$(TIER0_PUBLIC_SRC_DIR) -I$(TIER1_PUBLIC_SRC_DIR)
-LDFLAGS_PLG = -lm -ldl tier0_i486.so vstdlib_i486.so $(LIB_DIR)/mathlib_i486.a $(LIB_DIR)/tier1_i486.a $(LIB_DIR)/tier2_i486.a
+LDFLAGS_PLG = -lm -ldl $(LIB_DIR)/libtier0.so $(LIB_DIR)/libvstdlib.so $(LIB_DIR)/mathlib_$(ARCH).a $(LIB_DIR)/tier1_$(ARCH).a
 
 DO_CC = $(CPLUS) $(INCLUDEDIRS) -DARCH=$(ARCH)
 
@@ -30,14 +30,14 @@ PLUGIN_OBJS = \
 TIER0_OBJS = \
 	$(TIER0_OBJ_DIR)/memoverride.o \
 
-all: dirs $(NAME)_$(ARCH).$(SHLIBEXT)
+all: dirs $(NAME).$(SHLIBEXT)
 
 dirs:
 	-mkdir -p $(BUILD_OBJ_DIR)
 	-mkdir -p $(PLUGIN_OBJ_DIR)
 	-mkdir -p $(TIER0_OBJ_DIR)
 
-$(NAME)_$(ARCH).$(SHLIBEXT): $(PLUGIN_OBJS) $(TIER0_OBJS)
+$(NAME).$(SHLIBEXT): $(PLUGIN_OBJS) $(TIER0_OBJS)
 	$(CLINK) -o $(BUILD_DIR)/$@ -m32 $(SHLIBLDFLAGS) $(PLUGIN_OBJS) $(TIER0_OBJS) $(PUBLIC_OBJS) $(CPP_LIB) $(LDFLAGS_PLG) $(CPP_LIB)
 
 $(PLUGIN_OBJ_DIR)/%.o: $(PLUGIN_SRC_DIR)/%.cpp
@@ -48,4 +48,4 @@ $(TIER0_OBJ_DIR)/%.o: $(TIER0_PUBLIC_SRC_DIR)/%.cpp
 
 clean:
 	-rm -rf $(PLUGIN_OBJ_DIR)
-	-rm -f $(NAME)_$(ARCH).$(SHLIBEXT)
+	-rm -f $(NAME).$(SHLIBEXT)

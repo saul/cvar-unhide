@@ -1,29 +1,8 @@
-#
-# SDK Makefile for x86 Linux
-#
-#
-
 OS := $(shell uname -s)
 
 #############################################################################
 # Developer configurable items
 #############################################################################
-
-# the name of the mod binary (_i486.so is appended to the end)
-NAME = server
-
-# the location of the vcproj that builds the mod
-MOD_PROJ = ../game/server/server_scratch-2005.vcproj
-# the name of the mod configuration (typically <proj name>_<build type><build target>)
-MOD_CONFIG = Server\(SDK\)_ReleaseWin32
-
-# the directory the base binaries (tier0_i486.so, etc) are located
-# this should point to your orange box subfolder of where you have srcds installed.
-SRCDS_DIR = ~/srcds/csgo
-
-# the path to your mods directory
-# set this so that 'make install' or 'make installrelease' will copy your binary over automatically.
-GAME_DIR = $(SRCDS_DIR)/scratchmod
 
 # compiler options (gcc 3.4.1 or above is required - 4.1.2+ recommended)
 ifeq "$(OS)" "Darwin"
@@ -35,7 +14,7 @@ else
 CC = /usr/bin/gcc
 CPLUS = /usr/bin/g++
 CLINK = /usr/bin/gcc
-CPP_LIB = "$(SRCDS_DIR)/bin/libstdc++.so.6 $(SRCDS_DIR)/bin/libgcc_s.so.1"
+CPP_LIB = "libgcc_s.so.1"
 endif
 
 # put any compiler flags you want passed here
@@ -51,7 +30,6 @@ XERCES_INC_DIR = /usr/include
 XERCES_LIB_DIR = /usr/lib
 
 # Change this to true if you want to build debug binaries for everything
-# The only exception is the mod/game as MOD_CONFIG determines if it's a debug build or not
 DEBUG = false
 
 #############################################################################
@@ -116,20 +94,15 @@ BASE_DEFINES = CC=$(CC) AR=$(AR) CPLUS=$(CPLUS) CPP_LIB=$(CPP_LIB) DEBUG=$(DEBUG
 	LIB_DIR=$(LIB_DIR) SHLIBLDFLAGS="$(SHLIBLDFLAGS)" SHLIBEXT=$(SHLIBEXT) \
 	CLINK=$(CLINK) CFLAGS="$(CFLAGS)" DBG_CFLAGS=$(DBG_CFLAGS) LDFLAGS=$(LDFLAGS) \
 	DEFINES="$(DEFINES)" DBG_DEFINES=$(DBG_DEFINES) \
-	ARCH=$(ARCH) SRCDS_DIR=$(SRCDS_DIR) MOD_CONFIG=$(MOD_CONFIG) NAME=$(NAME) \
+	ARCH=$(ARCH) \
 	XERCES_INC_DIR=$(XERCES_INC_DIR) XERCES_LIB_DIR=$(XERCES_LIB_DIR)
 
 # Project Makefile
-MAKE_SERVER = Makefile.server
-MAKE_VCPM = Makefile.vcpm
 MAKE_PLUGIN = Makefile.plugin
-MAKE_SHADERAPIEMPTY = Makefile.shaderapiempty
 MAKE_TIER1 = Makefile.tier1
 MAKE_MATH = Makefile.mathlib
-MAKE_IFACE = Makefile.interfaces
-MAKE_CHOREO = Makefile.choreo
 
-all: check vcpm mod
+all: check plugin
 
 check:
 	if [ -z "$(CC)" ]; then echo "Compiler not defined."; exit; fi
@@ -140,44 +113,16 @@ check:
 	if [ ! -f "libtier0.$(SHLIBEXT)" ]; then ln -s $(LIB_DIR)/libtier0.$(SHLIBEXT) .; fi
 	if [ ! -f "libvstdlib.$(SHLIBEXT)" ]; then ln -s $(LIB_DIR)/libvstdlib.$(SHLIBEXT) .; fi
 
-vcpm: check
-	if [ ! -e "vcpm" ]; then $(MAKE) -f $(MAKE_VCPM) $(BASE_DEFINES);fi
-
-mod: check vcpm
-	./vcpm $(MOD_PROJ)
-	$(MAKE) -f $(MAKE_SERVER) $(BASE_DEFINES)
-
 plugin: check
 	$(MAKE) -f $(MAKE_PLUGIN) $(BASE_DEFINES)
 
-shaderapiempty: check
-	$(MAKE) -f $(MAKE_SHADERAPIEMPTY) $(BASE_DEFINES)
-	
 tier1:
 	$(MAKE) -f $(MAKE_TIER1) $(BASE_DEFINES)
 
 mathlib:
 	$(MAKE) -f $(MAKE_MATH) $(BASE_DEFINES)
 
-interfaces:
-	$(MAKE) -f $(MAKE_IFACE) $(BASE_DEFINES)
-
-choreo:
-	$(MAKE) -f $(MAKE_CHOREO) $(BASE_DEFINES)
-
-install:
-	cp -f $(NAME)_$(ARCH).$(SHLIBEXT) $(GAME_DIR)/bin/$(NAME)_$(ARCH).$(SHLIBEXT)
-
-installrelease:
-	cp -f $(NAME)_$(ARCH).$(SHLIBEXT) $(GAME_DIR)/bin/$(NAME)_$(ARCH).$(SHLIBEXT)
-	strip $(GAME_DIR)/bin/$(NAME)_$(ARCH).$(SHLIBEXT)
-
 clean:
-	$(MAKE) -f $(MAKE_VCPM) $(BASE_DEFINES) clean
 	$(MAKE) -f $(MAKE_PLUGIN) $(BASE_DEFINES) clean
-	$(MAKE) -f $(MAKE_SERVER) $(BASE_DEFINES) clean
-	$(MAKE) -f $(MAKE_SHADERAPIEMPTY) $(BASE_DEFINES) clean
 	$(MAKE) -f $(MAKE_TIER1) $(BASE_DEFINES) clean
 	$(MAKE) -f $(MAKE_MATH) $(BASE_DEFINES) clean
-	$(MAKE) -f $(MAKE_IFACE) $(BASE_DEFINES) clean
-	$(MAKE) -f $(MAKE_CHOREO) $(BASE_DEFINES) clean
