@@ -1,7 +1,6 @@
 ```
-] version
-Protocol version 13772 [1210/1210]
-Exe version 1.37.7.2 (csgo)
+Protocol version 13775 [1215/1215]
+Exe version 1.37.7.5 (csgo)
 Exe build: 08:50:46 Dec  3 2020 (8012) (730)
 Windows version 6.2
 Steam beta name: 
@@ -726,6 +725,7 @@ cl_bot_difficulty_ps3move                 | 0        | "devonly", "cl", "hidden"
 cl_bot_difficulty_sharpshooter            | 0        | "devonly", "cl", "hidden" | Bot difficulty while playing with SharpShooter device
 cl_brushfastpath                          | 1        | "cl", "cheat"    | 
 cl_burninggibs                            | 0        | "devonly", "cl"  | A burning player that gibs has burning gibs.
+cl_buywheel_donate_key                    | 0        | "cl", "a", "ss"  | Set the key to use for donation in the buy menu. 0: Left Control; 1: Left Alt; 2: Left Shift.
 cl_buywheel_nomousecentering              | 0        | "cl", "a", "ss"  | Set non-zero to prevent buy wheel from centering mouse into the wheel origin
 cl_buywheel_nonumberpurchasing            | 0        | "cl", "a", "ss"  | Set non-zero to prevent buy wheel from purchasing via number keys
 cl_cam_driver_compensation_scale          | 0.75     | "cl"             | 
@@ -1006,6 +1006,8 @@ cl_phys_maxticks                          | 0        | "devonly", "cl"  | Sets t
 cl_phys_show_active                       | 0        | "cl", "cheat"    | 
 cl_phys_timescale                         | 1.0      | "cl", "cheat"    | Sets the scale of time for client-side physics (ragdolls)
 cl_physicsshadowupdate_render             | 0        | "devonly", "cl"  | 
+cl_ping_fade_deadzone                     | 60       | "cl", "a"        | Distance from the crosshair over which the ping is completely invisible
+cl_ping_fade_distance                     | 300      | "cl", "a"        | Distance from the crosshair over which the ping fades
 cl_pitchdown                              | 89       | "cl", "cheat"    | 
 cl_pitchspeed                             | 225      | "devonly", "cl"  | 
 cl_pitchup                                | 89       | "cl", "cheat"    | 
@@ -3115,7 +3117,7 @@ player_debug_print_damage                 | 0        | "sv", "cheat"    | When t
 player_nevershow_communityservermessage   | 0        | "cl", "a", "ss"  | 
 player_old_armor                          | 0        | "devonly", "sv"  | 
 player_ping                               | cmd      | "sv", "print"    | Creates a ping notification where the player is looking.
-player_ping_token_cooldown                | 30       | "sv", "cheat"    | Cooldown for how long it takes for a player's ping token to refresh allowing them to ping again (they get 5 tokens).
+player_ping_token_cooldown                | 20       | "sv", "cheat"    | Cooldown for how long it takes for a player's ping token to refresh allowing them to ping again (they get 5 tokens).
 player_survival_list_9_1_B                | mg_dz_blacksite,mg_dz_sirocco,mg_dz_frostbite | "cl", "a"        | 
 player_teamplayedlast                     | 3        | "cl", "a", "ss"  | 
 player_wargames_list2_9_1_E04             | mg_skirmish_flyingscoutsman,mg_skirmish_armsrace,mg_skirmish_demolition | "cl", "a"        | 
