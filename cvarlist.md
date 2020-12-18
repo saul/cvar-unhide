@@ -1,8 +1,11 @@
+```
 Protocol version 13775 [1215/1215]
 Exe version 1.37.7.5 (csgo)
 Exe build: 08:50:46 Dec  3 2020 (8012) (730)
 Windows version 6.2
 Steam beta name: 
+```
+
 Name | Default | Flags | Description
 ---- | ------- | ----- | -----------
 +alt1                                     | cmd      | "cl"             | 
