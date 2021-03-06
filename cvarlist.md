@@ -1,9 +1,9 @@
 ```
-] version
-Protocol version 13748 [1097/1097]
-Exe version 1.37.4.8 (csgo)
-Exe build: 14:10:24 Mar 19 2020 (7803) (730)
+Protocol version 13775 [1215/1215]
+Exe version 1.37.7.5 (csgo)
+Exe build: 08:50:46 Dec  3 2020 (8012) (730)
 Windows version 6.2
+Steam beta name: 
 ```
 
 Name | Default | Flags | Description
@@ -46,6 +46,9 @@ Name | Default | Flags | Description
 +moveright                                | cmd      | "cl"             | 
 +moveup                                   | cmd      | "cl"             | 
 +quickinv                                 | cmd      | "cl"             | 
++radialradio                              | cmd      | "cl"             | 
++radialradio2                             | cmd      | "cl"             | 
++radialradio3                             | cmd      | "cl"             | 
 +reload                                   | cmd      | "cl"             | 
 +right                                    | cmd      | "cl"             | 
 +score                                    | cmd      | "cl"             | 
@@ -102,6 +105,9 @@ Name | Default | Flags | Description
 -moveright                                | cmd      | "cl"             | 
 -moveup                                   | cmd      | "cl"             | 
 -quickinv                                 | cmd      | "cl"             | 
+-radialradio                              | cmd      | "cl"             | 
+-radialradio2                             | cmd      | "cl"             | 
+-radialradio3                             | cmd      | "cl"             | 
 -reload                                   | cmd      | "cl"             | 
 -right                                    | cmd      | "cl"             | 
 -score                                    | cmd      | "cl"             | 
@@ -166,6 +172,7 @@ Name | Default | Flags | Description
 @panorama_box_shadow_no_comp_layer        | 1        | "devonly", "cheat" | 
 @panorama_cache_command_list_repaint_threshold | 0.25     | "devonly"        | 
 @panorama_cache_command_list_size_threshold | 2048     | "devonly"        | 
+@panorama_canvas_force_soft_lines         | 0        | "devonly", "cl"  | 0-off (default) 1-enable soft lines
 @panorama_canvas_fxaa                     | 0        | "devonly", "cl"  | 0-off, 1-always use fxaa (not just as a fallback if scratch rt not large enough for SSAA)
 @panorama_canvas_fxaa_edge_threshold_Q    | .166     | "devonly", "cl"  | The minimum amount of local contrast required to apply algorithm: (0.063 - overkill, slower), (0.125 - high quality), (0.166 - default), (0.250 - low quality), (0.333 - too little, faster)
 @panorama_canvas_fxaa_edge_threshold_min_Q | 0.0      | "devonly", "cl"  | Trims the algorithm from processing darks: (0.0312 - visible limit, slower), (0.0625 - high quality, faster), (0.0833 - upper limit, the start of visible unfiltered edges). Special note: when using FXAA_GREEN_AS_LUMA, likely want to set this to zero
@@ -482,7 +489,6 @@ banip                                     | cmd      |                  | Add an
 bench_end                                 | cmd      | "cheat"          | Ends gathering of info.
 bench_showstatsdialog                     | cmd      | "cl", "cheat"    | Shows a dialog displaying the most recent benchmark results.
 bench_start                               | cmd      | "cheat"          | Starts gathering of info. Arguments: filename to write results into
-bench_upload                              | cmd      | "cheat"          | Uploads most recent benchmark stats to the Valve servers.
 benchframe                                | cmd      |                  | Takes a snapshot of a particular frame in a time demo.
 bind                                      | cmd      |                  | Bind a key.
 bind_osx                                  | cmd      |                  | Bind a key for OSX only.
@@ -511,7 +517,7 @@ bot_chatter                               | normal   | "sv", "rep"      | Contro
 bot_chatter_use_rr                        | 1        | "devonly", "sv"  | 0 = Use old bot chatter system, 1 = Use response rules
 bot_control_next_all_teams                | cmd      | "devonly", "sv", "cheat" | Take control of the next bot regardless of team (development only).
 bot_controllable                          | 1        | "devonly", "sv", "rep" | Determines whether bots can be controlled by players
-bot_coop_force_throw_grenade_chance       | 0.7      | "sv", "cheat"    | 
+bot_coop_force_throw_grenade_chance       | 0.3      | "sv", "cheat"    | 
 bot_coop_idle_max_vision_distance         | 1400     | "sv", "rep"      | Max distance bots can see targets (in coop) when they are idle, dormant, hiding or asleep.
 bot_crouch                                | 0        | "sv", "cheat"    | 
 bot_debug                                 | 0        | "sv", "rep", "cheat" | For internal testing purposes.
@@ -553,7 +559,6 @@ bot_randombuy                             | 0        | "sv", "cheat"    | should
 bot_show_battlefront                      | 0        | "sv", "cheat"    | Show areas where rushing players will initially meet.
 bot_show_nav                              | 0        | "sv", "rep", "cheat" | For internal testing purposes.
 bot_show_occupy_time                      | 0        | "sv", "cheat"    | Show when each nav area can first be reached by each team.
-bot_show_patrol_areas                     | 0        | "sv", "cheat"    | Show bot patrol areas if present.
 bot_snipers_only                          | cmd      | "sv"             | Restricts the bots to only using sniper rifles
 bot_stop                                  | 0        | "sv", "rep", "cheat" | bot_stop &lt;1\|all&gt; \| &lt;not_bomber&gt; \| &lt;t&gt; \| &lt;ct&gt;
 bot_traceview                             | 0        | "sv", "rep", "cheat" | For internal testing purposes.
@@ -674,6 +679,7 @@ ch_createairboat                          | cmd      | "sv", "cheat"    | Spawn 
 ch_createjeep                             | cmd      | "sv", "cheat"    | Spawn jeep in front of the player.
 changelevel                               | cmd      | "norecord"       | Change server to the specified map
 changelevel2                              | cmd      | "norecord"       | Transition to the specified map in single player
+chatwheel_ping                            | cmd      | "sv", "print"    | Creates a ping notification triggered by the chatwheel.
 cheap_captions_fadetime                   | 0.5      | "devonly", "cl"  | 
 cheap_captions_test                       | 0        | "devonly", "cl"  | 
 chet_debug_idle                           | 0        | "sv", "a"        | If set one, many debug prints to help track down the TLK_IDLE issue. Set two for super verbose info
@@ -719,6 +725,7 @@ cl_bot_difficulty_ps3move                 | 0        | "devonly", "cl", "hidden"
 cl_bot_difficulty_sharpshooter            | 0        | "devonly", "cl", "hidden" | Bot difficulty while playing with SharpShooter device
 cl_brushfastpath                          | 1        | "cl", "cheat"    | 
 cl_burninggibs                            | 0        | "devonly", "cl"  | A burning player that gibs has burning gibs.
+cl_buywheel_donate_key                    | 0        | "cl", "a", "ss"  | Set the key to use for donation in the buy menu. 0: Left Control; 1: Left Alt; 2: Left Shift.
 cl_buywheel_nomousecentering              | 0        | "cl", "a", "ss"  | Set non-zero to prevent buy wheel from centering mouse into the wheel origin
 cl_buywheel_nonumberpurchasing            | 0        | "cl", "a", "ss"  | Set non-zero to prevent buy wheel from purchasing via number keys
 cl_cam_driver_compensation_scale          | 0.75     | "cl"             | 
@@ -851,6 +858,7 @@ cl_detail_max_sway                        | 0        | "cl", "a"        | Amplit
 cl_detail_multiplier                      | 1        | "cl", "cheat"    | extra details to create
 cl_dev_decaltrace_blood                   | cmd      | "devonly", "cl", "cheat" | Shoot out a decal spray that shoots blood.
 cl_disable_ragdolls                       | 0        | "cl", "cheat"    | 
+cl_disable_round_end_report               | 0        | "cl", "a"        | 
 cl_disable_splitscreen_cpu_level_cfgs_in_pip | 1        | "devonly", "cl"  | 
 cl_disable_water_render_targets           | 0        | "devonly", "cl"  | 
 cl_disablefreezecam                       | 0        | "cl", "a"        | Turn on/off freezecam on client
@@ -943,8 +951,6 @@ cl_leafsystemvis                          | 0        | "cl", "cheat"    |
 cl_leveloverview                          | 0        | "cl", "cheat"    | 
 cl_leveloverviewmarker                    | 0        | "cl", "cheat"    | 
 cl_lock_camera                            | 0        | "cl", "cheat"    | 
-cl_mainmenu_blog_file                     | cmd      | "cl", "hidden"   | Load blog file
-cl_mainmenu_blog_file_cache               | blogfilecache.txt | "devonly", "cl", "hidden" | Location of the cached blog file
 cl_mainmenu_hide_blog                     | cmd      | "cl", "hidden"   | Show the news panel and hide blog
 cl_mainmenu_show_blog                     | cmd      | "cl", "hidden"   | Show the blog and hide news panel
 cl_mainmenu_show_datagraph                |          | "cl"             | 
@@ -977,6 +983,7 @@ cl_obs_interp_settle_dist                 | 16       | "devonly", "cl"  |
 cl_obs_interp_snap_dist                   | 1        | "devonly", "cl"  | 
 cl_obs_interp_turn_to_face_end_frac       | 0.65     | "devonly", "cl"  | 
 cl_obs_interp_turn_to_face_start_frac     | 0.1      | "devonly", "cl"  | 
+cl_observed_bot_crosshair                 | 0        | "cl", "a"        | Control the crosshair shown when observing a bot. 0: Show player crosshair. 1: Show player crosshair only when bot can be taken over, otherwise show default.. 2: Always show default crosshair for bots.
 cl_observercrosshair                      | 1        | "cl", "a", "ss"  | 
 cl_overdraw_test                          | 0        | "cl", "numeric", "cheat" | 
 cl_panelanimation                         | cmd      | "cl"             | Shows panel animation variables: &lt;panelname \| blank for all panels&gt;.
@@ -999,6 +1006,8 @@ cl_phys_maxticks                          | 0        | "devonly", "cl"  | Sets t
 cl_phys_show_active                       | 0        | "cl", "cheat"    | 
 cl_phys_timescale                         | 1.0      | "cl", "cheat"    | Sets the scale of time for client-side physics (ragdolls)
 cl_physicsshadowupdate_render             | 0        | "devonly", "cl"  | 
+cl_ping_fade_deadzone                     | 60       | "cl", "a"        | Distance from the crosshair over which the ping is completely invisible
+cl_ping_fade_distance                     | 300      | "cl", "a"        | Distance from the crosshair over which the ping fades
 cl_pitchdown                              | 89       | "cl", "cheat"    | 
 cl_pitchspeed                             | 225      | "devonly", "cl"  | 
 cl_pitchup                                | 89       | "cl", "cheat"    | 
@@ -1036,7 +1045,32 @@ cl_radar_icon_scale_min                   | 0.6      | "cl", "a"        | Sets t
 cl_radar_rotate                           | 1        | "cl", "a"        | 1
 cl_radar_scale                            | 0.7      | "cl", "a"        | Sets the radar scale. Valid values are 0.25 to 1.0.
 cl_radar_square_with_scoreboard           | 1        | "cl", "a"        | If set, the radar will toggle to square when the scoreboard is visible.
-cl_radial_radio_tab                       | 0        | "cl", "a"        | 
+cl_radial_radio_tab                       | 0        | "cl"             | 
+cl_radial_radio_tab_0_text_1              | #Chatwheel_quiet | "cl", "a"        | 
+cl_radial_radio_tab_0_text_2              | #Chatwheel_requestecoround | "cl", "a"        | 
+cl_radial_radio_tab_0_text_3              | #Chatwheel_bplan | "cl", "a"        | 
+cl_radial_radio_tab_0_text_4              | #Chatwheel_requestweapon | "cl", "a"        | 
+cl_radial_radio_tab_0_text_5              | #Chatwheel_midplan | "cl", "a"        | 
+cl_radial_radio_tab_0_text_6              | #Chatwheel_droppedbomb | "cl", "a"        | 
+cl_radial_radio_tab_0_text_7              | #Chatwheel_aplan | "cl", "a"        | 
+cl_radial_radio_tab_0_text_8              | #Chatwheel_requestspend | "cl", "a"        | 
+cl_radial_radio_tab_1_text_1              | #Chatwheel_bombcarrierspotted | "cl", "a"        | 
+cl_radial_radio_tab_1_text_2              | #Chatwheel_requestecoround | "cl", "a"        | 
+cl_radial_radio_tab_1_text_3              | #Chatwheel_multipleenemieshere | "cl", "a"        | 
+cl_radial_radio_tab_1_text_4              | #Chatwheel_requestweapon | "cl", "a"        | 
+cl_radial_radio_tab_1_text_5              | #Chatwheel_rotatetome | "cl", "a"        | 
+cl_radial_radio_tab_1_text_6              | #Chatwheel_ihavethebomb | "cl", "a"        | 
+cl_radial_radio_tab_1_text_7              | #Chatwheel_oneenemyhere | "cl", "a"        | 
+cl_radial_radio_tab_1_text_8              | #Chatwheel_requestspend | "cl", "a"        | 
+cl_radial_radio_tab_2_text_1              | #Chatwheel_bombcarrierspotted | "cl", "a"        | 
+cl_radial_radio_tab_2_text_2              | #Chatwheel_requestecoround | "cl", "a"        | 
+cl_radial_radio_tab_2_text_3              | #Chatwheel_multipleenemieshere | "cl", "a"        | 
+cl_radial_radio_tab_2_text_4              | #Chatwheel_requestweapon | "cl", "a"        | 
+cl_radial_radio_tab_2_text_5              | #Chatwheel_rotatetome | "cl", "a"        | 
+cl_radial_radio_tab_2_text_6              | #Chatwheel_ihavethebomb | "cl", "a"        | 
+cl_radial_radio_tab_2_text_7              | #Chatwheel_oneenemyhere | "cl", "a"        | 
+cl_radial_radio_tab_2_text_8              | #Chatwheel_requestspend | "cl", "a"        | 
+cl_radial_radio_version_reset             | 2        | "cl", "a"        | 
 cl_radialmenu_deadzone_size               | 0.04     | "cl", "a"        | 
 cl_ragdoll_collide                        | 0        | "devonly", "cl"  | 
 cl_ragdoll_crumple                        | 1        | "devonly", "cl"  | 
@@ -1060,7 +1094,7 @@ cl_resend_timeout                         | 60       |                  | Total 
 cl_retire_low_priority_lights             | 0        | "devonly"        | Low priority dlights are replaced by high priority ones
 cl_righthand                              | 1        | "cl", "a", "ss"  | Use right-handed view models.
 cl_rumblescale                            | 1.0      | "cl", "a", "ss"  | Scale sensitivity of rumble effects (0 to 1.0)
-cl_sanitize_muted_players                 | 1        | "devonly", "cl"  | Hide names and avatars of muted players.
+cl_sanitize_muted_players                 | 1        | "cl"             | Hide names and avatars of muted players.
 cl_sanitize_player_names                  | 0        | "cl", "a"        | Replace names of other players with something non-offensive.
 cl_savescreenshotstosteam                 | 0        | "devonly", "hidden" | Saves screenshots to the Steam's screenshot library
 cl_scoreboard_mouse_enable_binding        | +attack2 | "cl", "a"        | Name of the binding to enable mouse selection in the scoreboard
@@ -1218,6 +1252,7 @@ commentary_finishnode                     | cmd      | "sv"             |
 commentary_firstrun                       | 0        | "cl", "a"        | 
 commentary_showmodelviewer                | cmd      | "cl"             | Display the commentary model viewer. Usage: commentary_showmodelviewer &lt;model name&gt; &lt;optional attached model name&gt;
 commentary_testfirstrun                   | cmd      | "cl"             | 
+con_allownotify                           | 1        | "a"              | Allows the notification area to be visible.
 con_drawnotify                            | 1        | "devonly"        | Disables drawing of notification area (for taking screenshots).
 con_enable                                | 0        | "a"              | Allows the console to be activated.
 con_filter_enable                         | 0        |                  | Filters console output based on the setting of con_filter_text. 1 filters completely, 2 displays filtered text brighter than other text.
@@ -1324,6 +1359,8 @@ demo_highlight_fastforwardspeed           | 10       | "devonly"        | Speed 
 demo_highlight_skipthreshold              | 10       | "devonly"        | Number of seconds between previous highlight event and round start that will fast forward instead of skipping.
 demo_highlight_timeafter                  | 4        | "devonly"        | How many seconds after highlight event to start fast forwarding.
 demo_highlight_timebefore                 | 6        | "devonly"        | How many seconds before highlight event to stop fast forwarding.
+demo_index                                | 0        | "a"              | If to use demo index. Needs to be set before loading demo.
+demo_index_max_other                      | 500      | "a"              | Limits the the count of index files of other (non-current) demos. Needs to be set before loading demo.
 demo_info                                 | cmd      |                  | Print information about currently playing demo.
 demo_interplimit                          | 4000     | "devonly"        | How much origin velocity before it's considered to have 'teleported' causing interpolation to reset.
 demo_interpolateview                      | 1        | "devonly"        | Do view interpolation during dem playback.
@@ -1467,6 +1504,7 @@ er_colwidth                               | 100      | "devonly"        |
 er_graphwidthfrac                         | 0.2      | "devonly"        | 
 er_maxname                                | 14       | "devonly"        | 
 error_message_explain_pure                | cmd      | "cl", "hidden"   | Take user to Steam support article
+error_message_explain_unsigned            | cmd      | "cl", "hidden"   | Take user to Steam support article
 error_message_explain_vac                 | cmd      | "cl", "hidden"   | Take user to Steam support article
 errorcallstacks_enable                    | 0        | "devonly"        | All Error() calls will attach a callstack
 errorcallstacks_length                    | 20       | "devonly"        | Length of automatic error callstacks
@@ -1483,6 +1521,8 @@ fadeout                                   | cmd      | "sv", "cheat"    | fadeou
 fast_fogvolume                            | 0        | "devonly"        | 
 fast_poly_convert                         | 1        | "devonly"        | 
 ff_damage_bullet_penetration              | 0        | "cl", "rep"      | If friendly fire is off, this will scale the penetration power and damage a bullet does when penetrating another friendly player
+ff_damage_decoy_explosion                 | 0        | "cl", "rep"      | Enables or disables team damage from decoy detonation
+ff_damage_grenade_hit                     | 1        | "cl", "rep"      | Enables or disables team damage from thrown grenade impacts
 ff_damage_reduction_bullets               | 0.1      | "cl", "rep"      | How much to reduce damage done to teammates when shot.  Range is from 0 - 1 (with 1 being damage equal to what is done to an enemy)
 ff_damage_reduction_grenade               | 0.25     | "cl", "rep"      | How much to reduce damage done to teammates by a thrown grenade.  Range is from 0 - 1 (with 1 being damage equal to what is done to an enemy)
 ff_damage_reduction_grenade_self          | 1        | "cl", "rep"      | How much to damage a player does to himself with his own grenade.  Range is from 0 - 1 (with 1 being damage equal to what is done to an enemy)
@@ -1571,6 +1611,7 @@ fs_printopenfiles                         | cmd      |                  | Show a
 fs_report_long_reads                      | 0        | "devonly"        | 0:Off, 1:All (for tracking accumulated duplicate read times), &gt;1:Microsecond threshold
 fs_report_sync_opens                      | 0        |                  | 0:Off, 1:Always, 2:Not during map load
 fs_report_sync_opens_callstack            | 0        | "devonly"        | 0 to not display the call-stack when we hit a fs_report_sync_opens warning. Set to 1 to display the call-stack.
+fs_show_pure_state                        | cmd      |                  | Display current filesystem whitelist state
 fs_syncdvddevcache                        | cmd      |                  | Force the 360 to get updated files that are in your p4 changelist(s) from the host PC when running with -dvddev.
 fs_warning_level                          | cmd      |                  | Set the filesystem warning level.
 fs_warning_mode                           | 0        | "devonly"        | 0:Off, 1:Warn main thread, 2:Warn other threads
@@ -1970,7 +2011,7 @@ mat_aniso_disable                         | 0        | "cheat"          | NOTE: 
 mat_antialias                             | 0        | "devonly"        | 
 mat_antialias_optionsui                   | 9999999  | "devonly", "cl"  | Used to set video property from options UI.
 mat_antialias_restart                     | 0        | "devonly", "cl"  | Used to set video property at device reset.
-mat_async_tex_maxtime_ms                  | 0.5      | "devonly"        | Cutoff time (in ms) spent in ServiceAsyncTextureLoads
+mat_async_tex_maxtime_ms                  | 3        | "devonly"        | Cutoff time (in ms) spent in ServiceAsyncTextureLoads
 mat_autoexposure_max                      | 2        | "cl", "cheat"    | 
 mat_autoexposure_max_multiplier           | 1.0      | "cl", "cheat"    | 
 mat_autoexposure_min                      | 0.5      | "cl", "cheat"    | 
@@ -2048,6 +2089,9 @@ mat_dynamicPaintmaps                      | 0        | "cheat"          |
 mat_dynamic_tonemapping                   | 1        | "cheat"          | 
 mat_dynamiclightmaps                      | 0        | "cheat"          | 
 mat_edit                                  | cmd      | "cheat"          | Bring up the material under the crosshair in the editor
+mat_enable_uber_shaders                   | 9999999  | "a"              | 
+mat_enable_uber_shaders_optionsui         | 9999999  | "devonly", "cl"  | Used to set video property from options UI.
+mat_enable_uber_shaders_restart           | 1        | "devonly", "cl"  | Used to set video property at device reset.
 mat_envmapsize                            | 128      | "devonly"        | 
 mat_envmaptgasize                         | 32.0     | "devonly"        | 
 mat_exclude_async_update                  | 1        | "devonly"        | 
@@ -2227,6 +2271,7 @@ mat_texture_list_txlod                    | cmd      | "norecord"       | Adjust
 mat_texture_list_txlod_sync               | cmd      | "norecord"       | 'reset' - resets all run-time changes to LOD overrides, 'save' - saves all changes to material content files
 mat_texture_list_view                     | 1        | "devonly", "numeric" | If this is nonzero, then the texture list panel will render thumbnails of currently-loaded textures.
 mat_texture_tracking                      | 0        | "devonly"        | 
+mat_texturestreaming                      | 0        | "devonly"        | Defer asynchronous loading of high-resolution textures.
 mat_tonemap_algorithm                     | 1        | "cl", "cheat"    | 0 = Original Algorithm 1 = New Algorithm
 mat_tonemapping_occlusion_use_stencil     | 0        | "devonly"        | 
 mat_triplebuffered                        | 0        | "devonly"        | This means we want triple buffering if we are fullscreen and vsync'd
@@ -2421,8 +2466,6 @@ mp_consecutive_loss_aversion              | 1        | "sv", "rep"      | How lo
 mp_consecutive_loss_max                   | 4        | "sv", "rep"      | 
 mp_coop_force_join_ct                     | 0        | "cl", "rep"      | If set, real players will auto join CT on join.
 mp_coopmission_bot_difficulty_offset      | 0        | "sv", "rep"      | The difficulty offset modifier for bots during coop missions.
-mp_coopmission_dz                         | 0        | "cl", "rep"      | Whether this a coop mission leveraging the DZ universe (tablets, choppers, drones, etc).
-mp_coopmission_dz_use_bt                  | 1        | "cl", "rep"      | Use new AI system for bots or not.
 mp_coopmission_mission_number             | 0        | "cl", "rep"      | Which mission the map should run after it loads.
 mp_ct_default_grenades                    |          | "cl", "rep"      | The default grenades that the CTs will spawn with.  To give multiple grenades, separate each weapon class with a space like this: 'weapon_molotov weapon_hegrenade'
 mp_ct_default_melee                       | weapon_knife | "cl", "rep"      | The default melee weapon that the CTs will spawn with.  Even if this is blank, a knife will be given.  To give a taser, it should look like this: 'weapon_knife weapon_taser'.  Remember to set mp_weapons_allow_zeus to 1 if you want to give a taser!
@@ -2477,7 +2520,7 @@ mp_enableroundwaittime                    | 1        | "devonly", "sv", "rep" | 
 mp_endmatch_votenextleveltime             | 20       | "cl"             | If mp_endmatch_votenextmap is set, players have this much time to vote on the next map at match end.
 mp_endmatch_votenextmap                   | 1        | "cl", "rep"      | Whether or not players vote for the next map at the end of the match when the final scoreboard comes up
 mp_endmatch_votenextmap_keepcurrent       | 1        | "cl", "rep"      | If set, keeps the current map in the list of voting options.  If not set, the current map will not appear in the list of voting options.
-mp_endmatch_votenextmap_wargames_modes    | armsrace demolition flyingscoutsman | "sv"             | Modes available for endmatch voting during War Games. Separate names with spaces.
+mp_endmatch_votenextmap_wargames_modes    | armsrace demolition flyingscoutsman retakes | "sv"             | Modes available for endmatch voting during War Games. Separate names with spaces.
 mp_endmatch_votenextmap_wargames_nummaps  | 3        | "sv"             | Maximum number of maps to include in endmatch voting during War Games
 mp_endmatch_votenextmap_wargames_nummodes | 1        | "sv"             | Maximum number of other War Games to include in endmatch voting during War Games
 mp_endwarmup_player_count                 | 0        | "cl", "rep"      | Number of players required to be connected to end warmup early. 0 to require maximum players for mode.
@@ -2517,8 +2560,14 @@ mp_ggtr_num_rounds_autoprogress           | 3        | "cl", "rep"      | Upgrad
 mp_give_player_c4                         | 1        | "cl", "rep"      | Whether this map should spawn a c4 bomb for a player or not.
 mp_global_damage_per_second               | 0.0      | "sv", "rep"      | If above 0, deal non-lethal damage to players over time.
 mp_guardian_add_bounds_pt                 | cmd      | "sv"             | mp_guardian_add_bounds_pt
+mp_guardian_add_player_spawn_pt           | cmd      | "sv"             | mp_guardian_add_player_spawn_pt
+mp_guardian_ai_bt_difficulty_adjust_wave_interval | 1        | "sv", "rep"      | Adjust the guardian bots' difficulty every nth guardian wave when using behavior trees.
+mp_guardian_ai_bt_difficulty_cap_beginning_round | 2        | "sv", "rep"      | Starting this round a difficulty cap will be applied to the bots.
+mp_guardian_ai_bt_difficulty_initial_value | 2        | "sv", "rep"      | Starting difficulty level for the gardian bots.
+mp_guardian_ai_bt_difficulty_max_next_level_bots | 3        | "sv", "rep"      | How many bots to increase difficulty per wave - this many easier bots will get harder.
 mp_guardian_bot_money_per_wave            | 800      | "sv", "rep"      | The amount of money bots get time each wave the players complete.  This # is absolute and not additive, the money is set to (this)x(wave#) for each bot on each wave.
 mp_guardian_clear_all_bounds              | cmd      | "sv"             | mp_guardian_clear_all_bounds
+mp_guardian_clear_all_player_spawns       | cmd      | "sv"             | mp_guardian_clear_all_player_spawns
 mp_guardian_draw_bounds                   | 0        | "devonly", "sv"  | 
 mp_guardian_emit_bounds_config            | cmd      | "sv"             | mp_guardian_emit_bounds_config
 mp_guardian_force_collect_hostages_timeout | 50       | "sv"             | Force bots to collect hostages after this amount of time if no enemy has been seen.
@@ -2588,7 +2637,7 @@ mp_randomspawn                            | 0        | "cl", "rep"      | Determ
 mp_randomspawn_dist                       | 0        | "cl", "rep"      | If using mp_randomspawn, determines whether to test distance when selecting this spot.
 mp_randomspawn_los                        | 1        | "cl", "rep"      | If using mp_randomspawn, determines whether to test Line of Sight when spawning.
 mp_require_gun_use_to_acquire             | 0        | "sv"             | Whether guns must be +used to acquire or default is touch-to-pickup
-mp_respawn_immunitytime                   | 4.0      | "cl", "rep"      | How many seconds after respawn immunity lasts.
+mp_respawn_immunitytime                   | 4.0      | "cl", "rep"      | How many seconds after respawn immunity lasts. Set to negative value to disable warmup immunity.
 mp_respawn_on_death_ct                    | 0        | "cl", "rep"      | When set to 1, counter-terrorists will respawn after dying.
 mp_respawn_on_death_t                     | 0        | "cl", "rep"      | When set to 1, terrorists will respawn after dying.
 mp_respawnwavetime                        | 10.0     | "devonly", "cl", "nf", "rep" | Time between respawn waves.
@@ -2596,6 +2645,23 @@ mp_respawnwavetime_ct                     | 10.0     | "cl", "rep"      | Time b
 mp_respawnwavetime_t                      | 10.0     | "cl", "rep"      | Time between respawn waves for Terrorists.
 mp_restartgame                            | 0        | "sv"             | If non-zero, game will restart in the specified number of seconds
 mp_restartround                           | 0        | "devonly", "sv"  | If non-zero, the current round will restart in the specified number of seconds
+mp_retake_ct_count                        | 4        | "cl", "rep"      | Number of CT's when playing retakes.
+mp_retake_ct_loadout_bonus_card           | #GameUI_Retake_Card_TheAWPortunity,1,1,rifle4 | "cl", "rep"      | CT bonus card for full buy round when playing bomb site retake.
+mp_retake_ct_loadout_bonus_card_availability | 1,2      | "cl", "rep"      | CT bonus card availability pattern for full buy round when playing bomb site retake.
+mp_retake_ct_loadout_default_pistol_round | 1|3;#GameUI_Retake_Card_4v3,0,0,secondary0|1;#GameUI_Retake_Card_FlashOut,0,0,secondary0,grenade2;#GameUI_Retake_Card_HideAndPeek,0,0,secondary0,grenade4 | "cl", "rep"      | CT Loadouts for default pistol round when playing bomb site retake.
+mp_retake_ct_loadout_enemy_card           | #GameUI_Retake_Card_BehindEnemyLines,1,1,rifle1,grenade2 | "cl", "rep"      | CT enemy card for full buy round when playing bomb site retake.
+mp_retake_ct_loadout_full_buy_round       | 4|2;#GameUI_Retake_Card_LightEmUp,1,1,rifle1,grenade2|2;#GameUI_Retake_Card_Kobe,1,1,rifle1,grenade3|1;#GameUI_Retake_Card_1g,1,1,rifle1,grenade0|1;#GameUI_Retake_Card_DisappearingAct,1,1,rifle1,grenade4|1;#GameUI_Retake_Card_EyesOnTarget,1,1,rifle3 | "cl", "rep"      | CT Loadouts for full buy round when playing bomb site retake.
+mp_retake_ct_loadout_light_buy_round      | 3|2;#GameUI_Retake_Card_UmpInSmoke,1,1,smg2,grenade4|2;#GameUI_Retake_Card_FunNGun,1,1,smg0,grenade3|2;#GameUI_Retake_Card_Sharpshooter,1,1,rifle2,grenade2|2;#GameUI_Retake_Card_BurstBullpup,1,1,rifle0 | "cl", "rep"      | CT Loadouts for force buy round when playing bomb site retake.
+mp_retake_ct_loadout_upgraded_pistol_round | 2|2;#GameUI_Retake_Card_TakeFive,0,0,secondary3|2;#GameUI_Retake_Card_BlindFire,0,0,secondary2,grenade2|2;#GameUI_Retake_Card_OnlyTakesOne,0,0,secondary4|2;#GameUI_Retake_Card_SneakyBeakyLike,0,0,secondary2,grenade4 | "cl", "rep"      | CT Loadouts for upgraded pistol round when playing bomb site retake.
+mp_retake_max_consecutive_rounds_same_target_site | 2        | "cl", "rep"      | Limit the number of consecutive rounds targeting the same site.
+mp_retake_t_count                         | 3        | "cl", "rep"      | Number of terrorists when playing retakes.
+mp_retake_t_loadout_bonus_card            | #GameUI_Retake_Card_TheAWPortunity,1,1,rifle4 | "cl", "rep"      | T bonus card for full buy round when playing bomb site retake.
+mp_retake_t_loadout_bonus_card_availability | 1,1,2    | "cl", "rep"      | T bonus card availability pattern for full buy round when playing bomb site retake.
+mp_retake_t_loadout_default_pistol_round  | 0|3;#GameUI_Retake_Card_4BadGuysLeft,0,0,secondary0|1;#GameUI_Retake_Card_LookAway,0,0,secondary0,grenade2;#GameUI_Retake_Card_WhenThereIsSmoke,0,0,secondary0,grenade4 | "cl", "rep"      | T Loadouts for default pistol round when playing bomb site retake.
+mp_retake_t_loadout_enemy_card            | #GameUI_Retake_Card_FindersKeepers,1,1,rifle1,grenade2 | "cl", "rep"      | T enemy card for full buy round when playing bomb site retake.
+mp_retake_t_loadout_full_buy_round        | 0|2;#GameUI_Retake_Card_OlReliable,1,1,rifle1,grenade2|1;#GameUI_Retake_Card_SmokeShow,1,1,rifle1,grenade4|1;#GameUI_Retake_Card_HotShot,1,1,rifle1,grenade0|1;#GameUI_Retake_Card_EyeSpy,1,1,rifle3,grenade3 | "cl", "rep"      | T Loadouts for full buy round when playing bomb site retake.
+mp_retake_t_loadout_light_buy_round       | 0|2;#GameUI_Retake_Card_BackInAFlash,1,1,smg2,grenade2|2;#GameUI_Retake_Card_AllIn,1,1,rifle0|1;#GameUI_Retake_Card_BoomBox,1,1,smg0,grenade3,grenade4|1;#GameUI_Retake_Card_SetThemFree,1,1,rifle2,grenade2 | "cl", "rep"      | T Loadouts for force buy round when playing bomb site retake.
+mp_retake_t_loadout_upgraded_pistol_round | 0|2;#GameUI_Retake_Card_BlindFire,0,0,secondary2,grenade2|2;#GameUI_Retake_Card_QueOta,0,0,secondary4|1;#GameUI_Retake_Card_SmokeScreen,0,0,secondary2,grenade4|1;#GameUI_Retake_Card_TecTecBoom,0,0,secondary3,grenade3 | "cl", "rep"      | T Loadouts for upgraded pistol round when playing bomb site retake.
 mp_round_restart_delay                    | 7.0      | "cl", "rep"      | Number of seconds to delay before restarting a round after a win
 mp_roundtime                              | 5        | "sv", "nf", "rep" | How many minutes each round takes.
 mp_roundtime_defuse                       | 0        | "sv", "nf", "rep" | How many minutes each round of Bomb Defuse takes. If 0 then use mp_roundtime instead.
@@ -2697,6 +2763,7 @@ nav_add_to_selected_set                   | cmd      | "sv", "cheat"    | Add cu
 nav_add_to_selected_set_by_id             | cmd      | "sv", "cheat"    | Add specified area id to the selected set.
 nav_analyze                               | cmd      | "sv", "cheat"    | Re-analyze the current Navigation Mesh and save it to disk.
 nav_analyze_scripted                      | cmd      | "sv", "hidden", "cheat" | commandline hook to run a nav_analyze and then quit.
+nav_approach_points_area_size_threshold   | 200      | "devonly", "sv"  | Ignore nav areas with at least one side smaller than this amount during approach point calculation.
 nav_area_bgcolor                          | 0 0 0 30 | "sv", "cheat"    | RGBA color to draw as the background color for nav areas while editing.
 nav_area_max_size                         | 50       | "sv", "cheat"    | Max area size created in nav generation
 nav_avoid                                 | cmd      | "sv", "cheat"    | Toggles the 'avoid this area when possible' flag used by the AI system.
@@ -2858,7 +2925,7 @@ net_connections_stats                     | cmd      |                  | Print 
 net_drawslider                            | 0        | "devonly"        | Draw completion slider during signon
 net_droponsendoverflow                    | 0        |                  | If enabled, channel will drop client when sending too much data causes buffer overrun
 net_droppackets                           | 0        | "cheat"          | Drops next n packets on client
-net_dumpeventstats                        | cmd      |                  | Dumps out a report of game event network usage
+net_dumpeventstats                        | cmd      | "cheat"          | Dumps out a report of game event network usage
 net_dumptest                              | 0        | "devonly"        | 
 net_earliertempents                       | 0        | "cheat"          | 
 net_fakejitter                            | 0        | "cheat"          | Jitter fakelag packet time
@@ -3044,16 +3111,17 @@ play_hrtf                                 | cmd      |                  | Play a
 playcast                                  | cmd      |                  | Play a broadcast
 playdemo                                  | cmd      |                  | Play a recorded demo file (.dem ).
 player_botdifflast_s                      | 2        | "cl", "a"        | 
-player_competitive_maplist_2v2_8_0_E8907D2E | mg_de_train,mg_de_lake,mg_de_inferno,mg_de_shortnuke,mg_de_vertigo,mg_gd_rialto,mg_de_shortdust,mg_de_overpass,mg_de_cbble | "cl", "a"        | 
-player_competitive_maplist_8_8_0_1B1D6577 | mg_de_dust2,mg_de_train,mg_de_inferno,mg_de_nuke,mg_de_vertigo,mg_de_mirage,mg_cs_office,mg_de_cache,mg_de_anubis,mg_de_chlorine,mg_cs_agency,mg_de_overpass | "cl", "a"        | 
+player_competitive_maplist_2v2_9_1_EB331822 | mg_de_train,mg_de_lake,mg_de_inferno,mg_de_shortnuke,mg_de_vertigo,mg_de_shortdust,mg_de_guard,mg_de_elysion,mg_de_overpass,mg_de_cbble | "cl", "a"        | 
+player_competitive_maplist_8_9_1_73271C88 | mg_cs_apollo,mg_de_dust2,mg_de_train,mg_de_ancient,mg_de_inferno,mg_de_nuke,mg_de_vertigo,mg_de_mirage,mg_cs_office,mg_de_cache,mg_de_mirage_scrimmagemap,mg_de_mutiny,mg_de_anubis,mg_de_engage,mg_de_swamp,mg_cs_agency,mg_de_overpass | "cl", "a"        | 
 player_debug_print_damage                 | 0        | "sv", "cheat"    | When true, print amount and type of all damage received by player to console.
 player_nevershow_communityservermessage   | 0        | "cl", "a", "ss"  | 
 player_old_armor                          | 0        | "devonly", "sv"  | 
 player_ping                               | cmd      | "sv", "print"    | Creates a ping notification where the player is looking.
-player_ping_throttle_decay                | 0.58     | "sv", "cheat"    | Decay for how fast the ping throttle delay will decay
-player_survival_list_8_0_7                | mg_dz_blacksite,mg_dz_sirocco,mg_dz_junglety | "cl", "a"        | 
+player_ping_token_cooldown                | 20       | "sv", "cheat"    | Cooldown for how long it takes for a player's ping token to refresh allowing them to ping again (they get 5 tokens).
+player_survival_list_9_1_B                | mg_dz_blacksite,mg_dz_sirocco,mg_dz_frostbite | "cl", "a"        | 
 player_teamplayedlast                     | 3        | "cl", "a", "ss"  | 
-player_wargames_list2_8_0_604             | mg_skirmish_flyingscoutsman,mg_skirmish_armsrace,mg_skirmish_demolition | "cl", "a"        | 
+player_wargames_list2_9_1_E04             | mg_skirmish_flyingscoutsman,mg_skirmish_armsrace,mg_skirmish_demolition | "cl", "a"        | 
+player_wargames_retakes_list_9_1_E04      | mg_skirmish_retakes | "cl", "a"        | 
 playflush                                 | cmd      |                  | Play a sound, reloading from disk in case of changes.
 playgamesound                             | cmd      | "cl", "cheat"    | Play a sound from the game sounds txt file
 playoverwatchevidence                     | cmd      | "hidden"         | Play evidence for an overwatch case.
@@ -3368,6 +3436,7 @@ r_pix_start                               | 0        | "devonly"        |
 r_pixelfog                                | 1        | "devonly"        | 
 r_pixelvisibility_partial                 | 1        | "devonly", "cl"  | 
 r_pixelvisibility_spew                    | 0        | "devonly", "cl"  | 
+r_player_visibility_mode                  | 1        | "cl", "a"        | 
 r_portal_use_pvs_optimization             | 1        | "devonly"        | Enables an optimization that allows portals to be culled when outside of the PVS.
 r_portalscloseall                         | 0        | "devonly"        | 
 r_portalsopenall                          | 0        | "cheat"          | Open all portals
@@ -3483,6 +3552,7 @@ rangefinder                               | cmd      | "cl", "cheat"    | rangef
 rate                                      | 196608   | "a", "user"      | Max bytes/sec the host can receive data
 rcon                                      | cmd      | "norecord"       | Issue an rcon command.
 rcon_address                              |          | "norecord"       | Address of remote server if sending unconnected rcon commands (format x.x.x.x:p) 
+rcon_connected_clients_allow              | 1        | "rep"            | Allow clients to use rcon commands on server.
 rcon_password                             |          | "norecord"       | remote console password.
 rebuy                                     | cmd      | "cl"             | Attempt to repurchase items with the order listed in cl_rebuy
 recompute_speed                           | cmd      | "cheat"          | Recomputes clock speed (for debugging purposes).
@@ -3510,6 +3580,10 @@ reset_expo                                | cmd      | "sv", "cheat"    | Reset 
 reset_gameconvars                         | cmd      | "cheat"          | Reset a bunch of game convars to default values
 respawn_entities                          | cmd      | "sv", "sp", "cheat" | Respawn all the entities in the map.
 restart                                   | cmd      |                  | Restart the game on the same level (add setpos to jump to current view position on restart).
+restart_in_insecure                       | cmd      | "cl", "hidden"   | Restart in insecure mode
+restart_in_trusted                        | cmd      | "cl", "hidden"   | Restart in trusted mode
+restart_in_untrusted                      | cmd      | "cl", "hidden"   | Restart in untrusted mode
+restart_normal                            | cmd      | "cl", "hidden"   | Restart
 retry                                     | cmd      | "norecord"       | Retry connection to last server.
 room_type                                 | 0        | "devonly", "demo" | 
 rope_averagelight                         | 1        | "devonly", "cl"  | Makes ropes use average of cubemap lighting instead of max intensity.
@@ -3757,7 +3831,7 @@ snd_headphone_pan_exponent                | cmd      |                  | Specif
 snd_headphone_pan_radial_weight           | cmd      |                  | Apply cos(angle) * weight before pan law
 snd_hrtf_async                            | 0        | "devonly"        | 
 snd_hrtf_benchmark                        | 0        | "devonly"        | 
-snd_hrtf_distance_behind                  | 100      | "a"              | HRTF calculations will calculate the player as being this far behind the camera<br>
+snd_hrtf_distance_behind                  | 100      | "a"              | HRTF calculations will calculate the player as being this far behind the camera. Valid values are between 0 and 300.<br>
 snd_hrtf_lerp_max_distance                | 800.0    | "cheat"          | 
 snd_hrtf_lerp_method                      | 1        | "devonly"        | 
 snd_hrtf_lerp_min_distance                | 100.0    | "cheat"          | 
@@ -3919,7 +3993,7 @@ softshadow_urt                            | 5.0f     | "devonly", "cl", "hidden"
 sound_device_list                         | cmd      |                  | Lists all available audio devices.
 sound_device_override                     |          | "a"              | ID of the sound device to use
 soundfade                                 | cmd      |                  | Fade client volume.
-soundinfo                                 | cmd      |                  | Describe the current sound device.
+soundinfo                                 | cmd      | "cheat"          | Describe the current sound device.
 soundlist                                 | cmd      |                  | List all known sounds.
 soundpatch_captionlength                  | 2.0      | "devonly", "cl", "rep" | How long looping soundpatch captions should display for.
 soundscape_debug                          | 0        | "sv", "cheat"    | When on, draws lines to all env_soundscape entities. Green lines show the active soundscape, red lines show soundscapes that aren't in range, and white lines show soundscapes that are in range, but not the active soundscape.
@@ -4123,6 +4197,7 @@ sv_client_min_interp_ratio                | 1        | "devonly", "rep" | This c
 sv_client_predict                         | -1       | "devonly", "rep" | This can be used to force the value of cl_predict for connected clients (only while they are connected).<br>   -1 = let clients set cl_predict to anything<br>    0 = force cl_predict to 0<br>    1 = force cl_predict to 1
 sv_clip_penetration_traces_to_players     | 1        | "devonly", "cl", "rep" | 
 sv_clockcorrection_msecs                  | 30       | "sv"             | The server tries to keep each player's m_nTickBase withing this many msecs of the server absolute tickcount
+sv_closecaption                           | 1        | "cl", "rep"      | Enable server-side close captioning: 0 = disabled; 1 = enabled as text chat; 2 = enabled for all sounds
 sv_coach_comm_unrestricted                | 0        | "cl", "rep"      | When set, ignores coach communication restrictions.
 sv_coaching_enabled                       | 0        | "cl", "rep"      | Allows spectating and communicating with a team ( 'coach t' or 'coach ct' )
 sv_comp_mode_allow_dc                     | 0        | "devonly", "sv"  | Set this to 1 to allow direct connects in Competitive mode
@@ -4151,7 +4226,7 @@ sv_disable_motd                           | 1        | "devonly", "cl", "rep", "
 sv_disable_observer_interpolation         | 0        | "cl", "rep"      | Disallow interpolating between observer targets on this server.
 sv_disable_pas                            | 1        | "sv", "rep", "cheat" | 
 sv_disable_querycache                     | 0        | "devonly", "sv", "rep", "cheat" | debug - disable trace query cache
-sv_disable_radar                          | 0        | "cl", "rep"      | 
+sv_disable_radar                          | 0        | "cl", "rep"      | 0: regular radar; 1: always disabled; 2: disabled in warmup
 sv_disablefreezecam                       | 0        | "devonly", "sv", "rep" | Turn on/off freezecam on server
 sv_downloadurl                            |          | "rep"            | Location from which clients can download missing files
 sv_drowning_damage_initial                | 2        | "sv", "rep"      | 
@@ -4303,6 +4378,8 @@ sv_logsecret                              | 0        |                  | If set
 sv_logsocket                              | 1        |                  | Uses a specific outgoing socket for sv udp logging
 sv_logsocket2                             | 1        |                  | Uses a specific outgoing socket for second source of sv udp logging
 sv_logsocket2_substr                      |          |                  | Uses a substring match for second source of sv udp logging
+sv_mapvetopickvote_maps                   | de_inferno,de_mirage,de_train,de_vertigo,de_dust2,de_overpass,de_nuke | "sv"             | Which maps are used for map veto pick sequence
+sv_mapvetopickvote_phase_duration         | [1:12][2:25][5:12][6:11] | "sv"             | How many seconds each phase lasts
 sv_massreport                             | 0        | "devonly", "sv"  | 
 sv_master_share_game_socket               | 1        | "devonly"        | Use the game's socket to communicate to the master server. If this is 0, then it will create a socket on -steamport + 1 to communicate to the master server on.
 sv_matchend_drops_enabled                 | 1        | "sv"             | Rewards gameplay time is always accumulated for players, but drops at the end of the match can be prevented
@@ -4371,12 +4448,10 @@ sv_precacheinfo                           | cmd      |                  | Show p
 sv_prime_accounts_only                    | 0        | "sv"             | When this setting is enabled only prime users can connect to this game server.
 sv_prop_door_open_speed_scale             | 1        | "sv", "rep"      | 
 sv_pure                                   | cmd      |                  | Show user data.
-sv_pure_checkvpk                          | cmd      |                  | CheckPureServerVPKFiles
+sv_pure_allow_loose_file_loads            | 1        |                  | If set to 1, clients may load non-vpk files from pure protected directories.
+sv_pure_allow_missing_files               | 1        |                  | If set to 1, the server will allow clients to play if files they loaded are missing on server, otherwise treat client as file mismatch.
 sv_pure_consensus                         | 99999999 |                  | Minimum number of file hashes to agree to form a consensus.
-sv_pure_finduserfiles                     | cmd      |                  | ListPureServerFiles
 sv_pure_kick_clients                      | 1        |                  | If set to 1, the server will kick clients with mismatching files. Otherwise, it will issue a warning to the client.
-sv_pure_listfiles                         | cmd      |                  | ListPureServerFiles
-sv_pure_listuserfiles                     | cmd      |                  | ListPureServerFiles
 sv_pure_retiretime                        | 900      |                  | Seconds of server idle time to flush the sv_pure file hash cache.
 sv_pure_trace                             | 0        |                  | If set to 1, the server will print a message whenever a client is verifying a CRC for a file.
 sv_pushaway_clientside                    | 0        | "devonly", "cl", "rep" | Clientside physics push away (0=off, 1=only localplayer, 1=all players)
@@ -4391,6 +4466,7 @@ sv_pushaway_player_force                  | 200000   | "devonly", "cl", "rep", "
 sv_pvsskipanimation                       | 1        | "sv", "a"        | Skips SetupBones when npc's are outside the PVS
 sv_querycache_stats                       | cmd      | "sv"             | Display status of the query cache (client only)
 sv_quota_stringcmdspersecond              | 40       |                  | How many string commands per second clients are allowed to submit, 0 to disallow all string commands
+sv_radio_throttle_window                  | 10       | "sv"             | The number of seconds before radio command tokens refresh.
 sv_rcon_banpenalty                        | 0        | "devonly"        | Number of minutes to ban users who fail rcon authentication
 sv_rcon_log                               | 1        | "devonly"        | Enable/disable rcon logging.
 sv_rcon_maxfailures                       | 10       | "devonly"        | Max number of times a user can fail rcon authentication before being banned
@@ -4623,6 +4699,9 @@ trace_report                              | 0        | "devonly", "sv"  |
 traceattack                               | cmd      | "sv"             | traceattack damage hitgroup
 tracer_extra                              | 1        | "devonly", "cl"  | 
 triple_monitor_mode                       | 0        | "cl", "a"        | Enable triple-monitor mode, restricting UI elements to the middle third of the display
+trusted_launch                            | 0        | "cl", "a"        | Trusted launch status
+trusted_launch_info                       | cmd      | "cl"             | Present information about trusted launch to console
+trusted_launch_once                       | 0        | "cl", "a"        | Trusted launch shown once
 tv_advertise_watchable                    | 0        | "prot", "nf", "norecord" | GOTV advertises the match as watchable via game UI, clients watching via UI will not need to type password
 tv_allow_autorecording_index              | -1       | "sv"             | When &gt;=0 restricts autorecording only to the specified TV index
 tv_allow_camera_man_override              | 0        |                  | Allows cameraman_override to have effect. When this is set, the primary interactive caster will have all the relevant fields present in all network packets, in every snapshot. This allows the secondary cameraman (-interactivecaster that connects to a tv port) to override those fields some seconds later regardless of whether they changed originally or not.
@@ -4701,11 +4780,16 @@ tv_title                                  | GOTV     |                  | Set ti
 tv_transmitall                            | 1        | "rep"            | Transmit all entities (not only director view)
 tv_window_size                            | 16.0     | "devonly"        | Specifies the number of seconds worth of frames that the tv replay system should keep in memory. Increasing this greatly increases the amount of memory consumed by the TV system
 tweak_ammo_impulses                       | cmd      | "sv", "cheat"    | Allow real-time tweaking of the ammo impulse values.
+ui_deepstats_radio_heat_figurine          | 0        | "cl", "a"        | 
+ui_deepstats_radio_heat_tab               | 0        | "cl", "a"        | 
+ui_deepstats_radio_heat_team              | 0        | "cl", "a"        | 
+ui_deepstats_toplevel_mode                | 0        | "cl", "a"        | 
 ui_inventorysettings_recently_acknowledged |          | "cl", "a"        | 
 ui_loading_tip_f1                         | 0.05     | "devonly", "cl"  | 
 ui_loading_tip_f2                         | 0.40     | "devonly", "cl"  | 
 ui_loading_tip_refresh                    | 5        | "devonly", "cl"  | 
 ui_lobby_draft_enabled                    |          | "cl"             | 
+ui_mainmenu_bkgnd_movie_C5E107D7          | ancient  | "cl", "a"        | Main menu background movie
 ui_nearbylobbies_filter3                  | competitive | "cl", "a"        | 
 ui_news_last_read_link                    |          | "cl", "a"        | 
 ui_playsettings_maps_listen_casual        | random_classic | "cl", "a"        | 
@@ -4713,6 +4797,7 @@ ui_playsettings_maps_listen_competitive   | random_classic | "cl", "a"        |
 ui_playsettings_maps_listen_deathmatch    | random_classic | "cl", "a"        | 
 ui_playsettings_maps_listen_scrimcomp2v2  | mg_de_inferno | "cl", "a"        | 
 ui_playsettings_maps_listen_skirmish      | mg_skirmish_flyingscoutsman | "cl", "a"        | 
+ui_playsettings_maps_listen_skirmish_retakes | mg_skirmish_retakes | "cl", "a"        | 
 ui_playsettings_maps_official_casual      | mg_casualsigma | "cl", "a"        | 
 ui_playsettings_maps_official_deathmatch  | mg_casualsigma | "cl", "a"        | 
 ui_playsettings_maps_workshop             |          | "cl", "a"        | 
