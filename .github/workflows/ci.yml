@@ -30,10 +30,10 @@ jobs:
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild
     - name: Run MSBuild
-      run: msbuild cvar-unhide.sln /p:Configuration=Release
+      run: msbuild /m /p:Configuration=Release cvar-unhide.sln
     - name: Archive binaries
       uses: actions/upload-artifact@v2
       with:
-        name: addons-${{ env.GITHUB_RUN_ID }}-${{ matrix.game }}
+        name: addons-${{ matrix.game }}
         path: addons
         retention-days: 5
