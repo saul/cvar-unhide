@@ -14,9 +14,6 @@ jobs:
     strategy:
       matrix:
         game: [csgo, portal2]
-    
-    env:
-      version: ${{ env.GITHUB_RUN_ID }}-${{ matrix.game }}
 
     steps:
     - uses: actions/checkout@v2
@@ -28,7 +25,7 @@ jobs:
       with:
         path: version.h
         contents: |
-          #define CVAR_UNHIDE_VERSION "${{ env.version }}"
+          #define CVAR_UNHIDE_VERSION "${{ env.GITHUB_RUN_ID }}-${{ matrix.game }}"
         write-mode: overwrite
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild
@@ -37,6 +34,6 @@ jobs:
     - name: Archive binaries
       uses: actions/upload-artifact@v2
       with:
-        name: addons-${{ env.version }}
+        name: addons-${{ env.GITHUB_RUN_ID }}-${{ matrix.game }}
         path: addons
         retention-days: 5
