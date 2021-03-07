@@ -118,7 +118,7 @@ jobs:
       - name: ZIP artifacts
         if: ${{ steps.checkTag.outputs.exists == 'false' }}
         run: |
-          for i in */; do rm addons; ln -s ${i%/} addons && zip -r "${i%/}.zip" addons; done
+          for i in */; do rm addons || true; ln -s ${i%/} addons && zip -r "${i%/}.zip" addons; done
         working-directory: artifacts/
 
       - name: Create GitHub release
