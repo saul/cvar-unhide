@@ -137,6 +137,7 @@ CServerPlugin::~CServerPlugin()
 //-----------------------------------------------------------------------------
 bool CServerPlugin::Load(CreateInterfaceFn interfaceFactory, CreateInterfaceFn gameServerFactory)
 {
+#ifndef CVAR_UNHIDE_GAME_PORTAL2
 	// Add -insecure to the CommandLine so we can't connect to VAC servers.
 	// Source should already disallow us from loading clientplugins without
 	// -insecure on the commandline. This is a very cautious safeguard.
@@ -155,6 +156,7 @@ bool CServerPlugin::Load(CreateInterfaceFn interfaceFactory, CreateInterfaceFn g
 		CommandLine()->AppendParm("-console", "");
 		return false;
 	}
+#endif
 
 	ConnectTier1Libraries(&interfaceFactory, 1);
 
