@@ -76,9 +76,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Pull version from package.json
+      - name: Set environment variables
         run: |
-          echo "VERSION=${{ needs.build.outputs.version }}" >> $GITHUB_ENV
+          VERSION=${{ needs.build.outputs.version }}
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "TAG=v$VERSION" >> $GITHUB_ENV
       - uses: mukunku/tag-exists-action@v1.0.0
         id: checkTag
@@ -86,13 +87,27 @@ jobs:
           tag: ${{ env.TAG }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Version package and tag
+      - name: Push new tag
         if: ${{ steps.checkTag.outputs.exists == 'false' }}
         run: |
           git config --global user.name 'GitHub Actions'
           git config --global user.email 'github-actions@users.noreply.github.com'
-      - name: Publish to registry
+          git tag $TAG
+          git push origin $TAG
+      - name: Download artifacts
         if: ${{ steps.checkTag.outputs.exists == 'false' }}
-        run: echo $VERSION
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        uses: actions/download-artifact@v2
+        with:
+          path: artifacts
+      - name: ZIP artifacts
+        if: ${{ steps.checkTag.outputs.exists == 'false' }}
+        run: |
+          for i in */; do zip -r "${i%/}.zip" "$i"; done
+        working-directory: artifacts/
+      - name: Create GitHub release
+        if: ${{ steps.checkTag.outputs.exists == 'false' }}
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "artifacts/*.zip"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ env.TAG }}
