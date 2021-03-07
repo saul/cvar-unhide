@@ -1,0 +1,41 @@
+name: Plugin build
+
+on:
+  push:
+    branches: [ $default-branch ]
+  pull_request:
+    branches: [ $default-branch ]
+
+jobs:
+  build:
+    runs-on: windows-2019
+
+    strategy:
+      matrix:
+        game: [csgo, portal2]
+    
+    env:
+      version: ${{ env.GITHUB_RUN_ID }}-${{ matrix.game }}
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Checkout hl2sdk
+      run: |
+        git config -f .gitmodules submodule.hl2sdk.branch ${{ matrix.game }}
+        git submodule update --remote
+    - uses: DamianReeves/write-file-action
+      with:
+        path: version.h
+        contents: |
+          #define CVAR_UNHIDE_VERSION "${{ env.version }}"
+        write-mode: overwrite
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild
+    - name: Run MSBuild
+      run: msbuild cvar-unhide.sln /p:Configuration=Release
+    - name: Archive binaries
+      uses: actions/upload-artifact@v2
+      with:
+        name: addons-${{ env.version }}
+        path: addons
+        retention-days: 5

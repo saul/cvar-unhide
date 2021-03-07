@@ -14,7 +14,7 @@
 #include "dbg.h"
 #include "tier1/tier1.h"
 #include "engine/iserverplugin.h"
-#include "game/server/iplayerinfo.h"
+#include "ihltvdirector.h"
 #include "eiface.h"
 #include "convar.h"
 #include "Color.h"
@@ -32,31 +32,9 @@
 //-----------------------------------------------------------------------------
 // Interface globals
 //-----------------------------------------------------------------------------
-IVEngineServer *engine = NULL;
-IServerPluginHelpers *helpers = NULL;
+CreateInterfaceFn g_gameServerFactory = NULL;
 IServerGameDLL *serverGameDll = NULL;
-IPlayerInfoManager *playerinfomanager = NULL;
-CGlobalVars *gpGlobals = NULL;
-
-//-----------------------------------------------------------------------------
-// Purpose: entity helpers
-//-----------------------------------------------------------------------------
-inline edict_t* INDEXENT(int iEdictNum)
-{
-	Assert(iEdictNum >= 0 && iEdictNum < MAX_EDICTS);
-	edict_t *pEdict = gpGlobals->pEdicts + iEdictNum;
-
-	if (pEdict->IsFree())
-		return NULL;
-
-	return pEdict;
-}
-
-inline int ENTINDEX(edict_t *pEdict)
-{
-	Assert(pEdict >= gpGlobals->pEdicts && pEdict < gpGlobals->pEdicts + MAX_EDICTS);
-	return pEdict - gpGlobals->pEdicts;
-}
+IHLTVDirector *hltvdirector = NULL;
 
 //-----------------------------------------------------------------------------
 // Purpose: interface load helper
@@ -180,16 +158,7 @@ bool CServerPlugin::Load(CreateInterfaceFn interfaceFactory, CreateInterfaceFn g
 
 	ConnectTier1Libraries(&interfaceFactory, 1);
 
-	// Load interfaces
-	if (!LoadInterface<IVEngineServer>(engine, interfaceFactory, "VEngineServer", 23) ||
-		!LoadInterface<IServerPluginHelpers>(helpers, interfaceFactory, "ISERVERPLUGINHELPERS", 1) ||
-		!LoadInterface<IServerGameDLL>(serverGameDll, gameServerFactory, "ServerGameDLL", 5) ||
-		!LoadInterface<IPlayerInfoManager>(playerinfomanager, gameServerFactory, "PlayerInfoManager", 2))
-	{
-		return false;
-	}
-
-	gpGlobals = playerinfomanager->GetGlobalVars();
+	g_gameServerFactory = gameServerFactory;
 
 	MathLib_Init();
 	ConVar_Register();
@@ -433,6 +402,16 @@ CON_COMMAND(force_dispatch, "Dispatch a command regardless of any hidden, cheat 
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
+class DummyCopier : ConCommandBase
+{
+public:
+	char* CopyString(const char* from)
+	{
+		return ConCommandBase::CopyString(from);
+	}
+
+} copier;
+
 CON_COMMAND(cvar_set, "Set the value of a ConVar regardless of its maximum/minimum values")
 {
 	if (args.ArgC() < 3)
@@ -464,16 +443,15 @@ CON_COMMAND(cvar_set, "Set the value of a ConVar regardless of its maximum/minim
 
 	if (len > value.m_StringLength)
 	{
-		if (value.m_pszString)
-		{
-			delete[] value.m_pszString;
-		}
-
-		value.m_pszString = new char[len];
+		// Copies string using tier1 local new/delete operators
+		// This leaks the old string, but we don't have tier1's delete[] to hand
+		value.m_pszString = copier.CopyString(pszNewValue);
 		value.m_StringLength = len;
 	}
-
-	memcpy(value.m_pszString, pszNewValue, len);
+	else
+	{
+		memcpy(value.m_pszString, pszNewValue, len);
+	}
 
 	// Invoke any necessary callback function
 	if (!bNoCallback)
@@ -536,7 +514,7 @@ void DumpSendTable(SendTable *pTable, int nDepth)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose: Dump all network props.
 //-----------------------------------------------------------------------------
 CON_COMMAND(dump_netprops, "Dump all network props. Syntax: [table depth = 1]. A table depth of -1 indicates infinite depth.")
 {
@@ -544,10 +522,35 @@ CON_COMMAND(dump_netprops, "Dump all network props. Syntax: [table depth = 1]. A
 	if (args.ArgC() == 2)
 		nDepth = atoi(args.Arg(1));
 
+	if (serverGameDll == NULL &&
+		!LoadInterface<IServerGameDLL>(serverGameDll, g_gameServerFactory, "ServerGameDLL", 5))
+	{
+		return;
+	}
+
 	for (ServerClass *pServerClass = serverGameDll->GetAllServerClasses(); pServerClass; pServerClass = pServerClass->m_pNext)
 	{
 		Msg("Class: %s [%d]\n", pServerClass->GetName(), pServerClass->m_ClassID);
 		DumpSendTable(pServerClass->m_pTable, nDepth);
 		Msg("\n");
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Dump HLTV director mod events.
+//-----------------------------------------------------------------------------
+CON_COMMAND(hltv_modevents, "Dump HLTV director mod events.")
+{
+	if (hltvdirector == NULL &&
+		!LoadInterface<IHLTVDirector>(hltvdirector, g_gameServerFactory, "HLTVDirector", 1))
+	{
+		return;
+	}
+
+	Msg("HLTVDirector::GetModEvents:\n");
+	for (const char** modevents = hltvdirector->GetModEvents(); *modevents != NULL; ++modevents)
+	{
+		const char* eventname = *modevents;
+		Msg("- %s\n", eventname);
 	}
 }
