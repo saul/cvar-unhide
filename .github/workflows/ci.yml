@@ -1,4 +1,4 @@
-name: Plugin build
+name: CI
 
 on:
   push:
@@ -26,7 +26,7 @@ jobs:
       with:
         path: version.h
         contents: |
-          #define CVAR_UNHIDE_VERSION "${{ env.GITHUB_RUN_ID }}-${{ matrix.game }}"
+          #define CVAR_UNHIDE_VERSION "${{ github.run_id }}-${{ matrix.game }}"
         write-mode: overwrite
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
