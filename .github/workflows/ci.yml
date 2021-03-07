@@ -20,7 +20,8 @@ jobs:
     - name: Checkout hl2sdk
       run: |
         git config -f .gitmodules submodule.hl2sdk.branch ${{ matrix.game }}
-        git submodule update --init
+        git submodule sync
+        git submodule update --init --remote
     - uses: DamianReeves/write-file-action@v1.0
       with:
         path: version.h
