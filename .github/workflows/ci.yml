@@ -46,7 +46,7 @@ jobs:
       if: ${{ matrix.os == 'windows-2019' }}
       run: msbuild /m /p:Configuration=Release cvar-unhide.sln
     - name: Build plugin (Linux)
-      if: ${{ matrix.os == 'ubuntu-20.04' }}
+      if: ${{ matrix.os == 'ubuntu-18.04' }}
       uses: docker://i386/ubuntu:18.04
       with:
         args: make plugin
