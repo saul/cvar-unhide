@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [windows-2019, ubuntu-20.04]
+        os: [windows-2019, ubuntu-18.04]
         game: [csgo, portal2]
 
     steps:
@@ -42,7 +42,10 @@ jobs:
       run: msbuild /m /p:Configuration=Release cvar-unhide.sln
     - name: Build plugin (Linux)
       if: ${{ matrix.os == 'ubuntu-20.04' }}
-      run: make plugin
+      uses: i386/ubuntu:18.04
+      run: |
+        apt-get install -y build-essential
+        make plugin
     - name: Archive binaries
       uses: actions/upload-artifact@v2
       with:
