@@ -40,9 +40,9 @@ MAKE = make
 AR = "ar rvs"
 
 # the dir we want to put binaries we build into
-BUILD_DIR = .
+BUILD_DIR = addons
 # the place to put object files
-BUILD_OBJ_DIR = $(BUILD_DIR)/obj
+BUILD_OBJ_DIR = obj
 
 # the location of the source code
 SRC_DIR = hl2sdk
