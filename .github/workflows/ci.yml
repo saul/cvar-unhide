@@ -22,11 +22,16 @@ jobs:
         git config -f .gitmodules submodule.hl2sdk.branch ${{ matrix.game }}
         git submodule sync
         git submodule update --init --remote
+    - name: Get current time
+      uses: 1466587594/get-current-time@v2
+      id: current-time
+      with:
+        format: YYYYMMDD-HH
     - uses: DamianReeves/write-file-action@v1.0
       with:
         path: version.h
         contents: |
-          #define CVAR_UNHIDE_VERSION "${{ github.run_id }}-${{ matrix.game }}"
+          #define CVAR_UNHIDE_VERSION "${{ steps.current-time.outputs.formattedTime }}-${{ matrix.game }}"
         write-mode: overwrite
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2

@@ -1,6 +1,6 @@
 # cvar-unhide
 
-This Source Engine plugin reveals all console variables (convars/cvars) that are marked as hidden or development-only. The plugin can also set console variables to arbitrary values bypassing any hard-coded minimum/maximum. Furthermore, console commands can be 'force dispatched' regardless of whether they are marked as hidden, cheat or development-only.
+This Source Engine plugin reveals all console variables (convars/cvars) that are marked as hidden or development-only. The plugin can also set console variables to arbitrary values, bypassing any hard-coded minimum/maximum. Furthermore, console commands can be 'force dispatched' regardless of whether they are marked as hidden, cheat or development-only.
 
 A list of all console variables/commands that are made available by this plugin can be found in [cvarlist.md](./cvarlist.md).
 
@@ -13,9 +13,12 @@ A list of all console variables/commands that are made available by this plugin 
 
 ## Installation
 
-1. Download the latest release of the plugin from GitHub: https://github.com/saul/csgo-cvar-unhide/releases/latest
-2. Extract the contents of the ZIP to `$STEAM\steamapps\common\Counter-Strike Global Offensive\csgo`.
-3. Start Counter-Strike: Global Offensive with `-insecure` in the launch options. If you do not know how to do this, take a look this [Steam Community guide](https://steamcommunity.com/sharedfiles/filedetails/?id=379782151).
+1. Download the latest release of the plugin from GitHub: https://github.com/saul/cvar-unhide/releases/latest
+2. Extract the contents of the ZIP to the game's `addons` folder. \
+   👉 Create the folder if it doesn't already exist.
+   - `$STEAM\steamapps\common\Counter-Strike Global Offensive\csgo\addons` for CSGO
+   - `$STEAM\steamapps\common\Portal 2\portal2\addons` for Portal 2
+3. Start the game with `-insecure` in the launch options. If you don't know how to do this, take a look this [Steam Community guide](https://steamcommunity.com/sharedfiles/filedetails/?id=379782151).
 
 ## Available commands
 
