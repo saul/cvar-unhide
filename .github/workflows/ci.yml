@@ -19,29 +19,34 @@ jobs:
           # No Linux binaries for portal2
           - os: ubuntu-18.04
             game: portal2
-    
+
     outputs:
       version: ${{ steps.version.outputs.version }}
 
     steps:
     - uses: actions/checkout@v2
+
     - name: Checkout hl2sdk
       run: |
         git config -f .gitmodules submodule.hl2sdk.branch ${{ matrix.game }}
         git submodule sync
         git submodule update --init --remote
+
     - name: Get current time
       uses: 1466587594/get-current-time@v2
       id: current-time
       with:
         format: YYYYMMDD
+
     - id: version
       run: echo "::set-output name=version::${{ steps.current-time.outputs.formattedTime }}.${{ github.run_number }}"
+
     - name: Format game name
       uses: ASzc/change-string-case-action@v1
       id: game-name
       with:
         string: ${{ matrix.game }}
+
     - name: Write version.h
       uses: DamianReeves/write-file-action@v1.0
       with:
@@ -50,17 +55,21 @@ jobs:
           #define CVAR_UNHIDE_VERSION "${{ steps.version.outputs.version }}-${{ matrix.game }}"
           #define CVAR_UNHIDE_GAME_${{ steps.game-name.outputs.uppercase }}
         write-mode: overwrite
+
     - name: Add MSBuild to PATH
       if: ${{ matrix.os == 'windows-2019' }}
       uses: microsoft/setup-msbuild@v1.0.2
+
     - name: Build plugin (Windows)
       if: ${{ matrix.os == 'windows-2019' }}
       run: msbuild /m /p:Configuration=Release cvar-unhide.sln
+
     - name: Build plugin (Linux)
       if: ${{ matrix.os == 'ubuntu-18.04' }}
       uses: docker://saulren/serverplugin-base:latest
       with:
         args: make plugin
+
     - name: Archive binaries
       uses: actions/upload-artifact@v2
       with:
@@ -76,17 +85,20 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
       - name: Set environment variables
         run: |
           VERSION=${{ needs.build.outputs.version }}
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "TAG=v$VERSION" >> $GITHUB_ENV
+
       - uses: mukunku/tag-exists-action@v1.0.0
         id: checkTag
         with:
           tag: ${{ env.TAG }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Push new tag
         if: ${{ steps.checkTag.outputs.exists == 'false' }}
         run: |
@@ -94,16 +106,19 @@ jobs:
           git config --global user.email 'github-actions@users.noreply.github.com'
           git tag $TAG
           git push origin $TAG
+
       - name: Download artifacts
         if: ${{ steps.checkTag.outputs.exists == 'false' }}
         uses: actions/download-artifact@v2
         with:
           path: artifacts
+
       - name: ZIP artifacts
         if: ${{ steps.checkTag.outputs.exists == 'false' }}
         run: |
-          for i in */; do zip -r "${i%/}.zip" "$i"; done
+          for i in */; do rm addons; ln -s ${i%/} addons && zip -r "${i%/}.zip" addons; done
         working-directory: artifacts/
+
       - name: Create GitHub release
         if: ${{ steps.checkTag.outputs.exists == 'false' }}
         uses: ncipollo/release-action@v1
