@@ -15,6 +15,9 @@ jobs:
       matrix:
         os: [windows-2019, ubuntu-18.04]
         game: [csgo, portal2]
+        exclude:
+          - os: ubuntu-18.04
+            game: portal2
 
     steps:
     - uses: actions/checkout@v2
@@ -49,7 +52,7 @@ jobs:
       if: ${{ matrix.os == 'ubuntu-18.04' }}
       uses: docker://i386/ubuntu:18.04
       with:
-        args: make plugin
+        args: /bin/bash -c "apt-get install -y build-essential && make plugin"
     - name: Archive binaries
       uses: actions/upload-artifact@v2
       with:
