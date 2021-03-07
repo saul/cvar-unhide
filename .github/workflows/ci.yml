@@ -9,10 +9,11 @@ on:
 
 jobs:
   build:
-    runs-on: windows-2019
+    runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
+        os: [windows-2019, ubuntu-20.04]
         game: [csgo, portal2]
 
     steps:
@@ -26,20 +27,25 @@ jobs:
       uses: 1466587594/get-current-time@v2
       id: current-time
       with:
-        format: YYYYMMDD-HH
+        format: YYYYMMDD
     - uses: DamianReeves/write-file-action@v1.0
       with:
         path: version.h
         contents: |
-          #define CVAR_UNHIDE_VERSION "${{ steps.current-time.outputs.formattedTime }}-${{ matrix.game }}"
+          #define CVAR_UNHIDE_VERSION "${{ steps.current-time.outputs.formattedTime }}.${{ github.run_number }}-${{ matrix.game }}"
         write-mode: overwrite
     - name: Add MSBuild to PATH
+      if: ${{ matrix.os == 'windows-2019' }}
       uses: microsoft/setup-msbuild@v1.0.2
-    - name: Run MSBuild
+    - name: Build plugin (Windows)
+      if: ${{ matrix.os == 'windows-2019' }}
       run: msbuild /m /p:Configuration=Release cvar-unhide.sln
+    - name: Build plugin (Linux)
+      if: ${{ matrix.os == 'ubuntu-20.04' }}
+      run: make plugin
     - name: Archive binaries
       uses: actions/upload-artifact@v2
       with:
-        name: addons-${{ matrix.game }}
+        name: addons-${{ matrix.game }}-${{ matrix.os }}
         path: addons
         retention-days: 5
