@@ -28,7 +28,7 @@ jobs:
           #define CVAR_UNHIDE_VERSION "${{ env.GITHUB_RUN_ID }}-${{ matrix.game }}"
         write-mode: overwrite
     - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild
+      uses: microsoft/setup-msbuild@v1.0.2
     - name: Run MSBuild
       run: msbuild /m /p:Configuration=Release cvar-unhide.sln
     - name: Archive binaries
