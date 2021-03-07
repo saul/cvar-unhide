@@ -21,7 +21,7 @@ jobs:
       run: |
         git config -f .gitmodules submodule.hl2sdk.branch ${{ matrix.game }}
         git submodule update --remote
-    - uses: DamianReeves/write-file-action
+    - uses: DamianReeves/write-file-action@v1.0
       with:
         path: version.h
         contents: |
