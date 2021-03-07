@@ -2,4 +2,6 @@
 *.user
 Debug
 Release
-addons/*.dll
+*.dll
+*.so
+plugin_map.txt
