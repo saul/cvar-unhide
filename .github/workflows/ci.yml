@@ -16,6 +16,7 @@ jobs:
         os: [windows-2019, ubuntu-18.04]
         game: [csgo, portal2]
         exclude:
+          # No Linux binaries for portal2
           - os: ubuntu-18.04
             game: portal2
 
@@ -31,11 +32,13 @@ jobs:
       id: current-time
       with:
         format: YYYYMMDD
-    - uses: ASzc/change-string-case-action@v1
+    - name: Format game name
+      uses: ASzc/change-string-case-action@v1
       id: game-name
       with:
         string: ${{ matrix.game }}
-    - uses: DamianReeves/write-file-action@v1.0
+    - name: Write version.h
+      uses: DamianReeves/write-file-action@v1.0
       with:
         path: version.h
         contents: |
