@@ -50,9 +50,9 @@ jobs:
       run: msbuild /m /p:Configuration=Release cvar-unhide.sln
     - name: Build plugin (Linux)
       if: ${{ matrix.os == 'ubuntu-18.04' }}
-      uses: docker://i386/ubuntu:18.04
+      uses: docker://saulren/serverplugin-base:latest
       with:
-        args: /bin/bash -c "apt-get install -y build-essential && make plugin"
+        args: make plugin
     - name: Archive binaries
       uses: actions/upload-artifact@v2
       with:
