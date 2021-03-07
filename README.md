@@ -2,7 +2,7 @@
 
 This Source Engine plugin reveals all console variables (convars/cvars) that are marked as hidden or development-only. The plugin can also set console variables to arbitrary values, bypassing any hard-coded minimum/maximum. Furthermore, console commands can be 'force dispatched' regardless of whether they are marked as hidden, cheat or development-only.
 
-A list of all console variables/commands that are made available by this plugin can be found in [cvarlist.md](./cvarlist.md).
+A list of all console variables/commands that are made available by this plugin can be found in [cvarlist-csgo.md](./cvarlist-csgo.md) and [cvarlist-portal2.md](./cvarlist-portal2.md).
 
 💡 For VAC safety, you must add `-insecure` to the launch options. The plugin will not load without this command-line argument set.
 
