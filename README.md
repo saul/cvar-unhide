@@ -1,10 +1,10 @@
-# cvar-unhide
+# cvar-unhide [![CI](https://github.com/saul/cvar-unhide/actions/workflows/ci.yml/badge.svg)](https://github.com/saul/cvar-unhide/actions/workflows/ci.yml)
 
 This Source Engine plugin reveals all console variables (convars/cvars) that are marked as hidden or development-only. The plugin can also set console variables to arbitrary values, bypassing any hard-coded minimum/maximum. Furthermore, console commands can be 'force dispatched' regardless of whether they are marked as hidden, cheat or development-only.
 
 A list of all console variables/commands that are made available by this plugin can be found in [cvarlist-csgo.md](./cvarlist-csgo.md) and [cvarlist-portal2.md](./cvarlist-portal2.md).
 
-💡 For VAC safety, you must add `-insecure` to the launch options. The plugin will not load without this command-line argument set.
+💡 For VAC safety, you must add `-insecure` to CSGO's launch options. The plugin will not load without this command-line argument set.
 
 ### Supported games
 
@@ -14,8 +14,7 @@ A list of all console variables/commands that are made available by this plugin 
 ## Installation
 
 1. Download the latest release of the plugin from GitHub: https://github.com/saul/cvar-unhide/releases/latest
-2. Extract the contents of the ZIP to the game's mod folder. \
-   👉 Create the folder if it doesn't already exist.
+2. Extract the contents of the ZIP to the game's mod folder.
    - `$STEAM\steamapps\common\Counter-Strike Global Offensive\csgo` for CSGO
    - `$STEAM\steamapps\common\Portal 2\portal2` for Portal 2
 3. Start the game from Steam. \
