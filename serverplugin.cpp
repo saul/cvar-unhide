@@ -460,7 +460,10 @@ public:
 		if (!bNoCallback)
 		{
 #ifdef CVAR_UNHIDE_GAME_L4D2
-			(*pVar->m_fnChangeCallback)(pVar, pszOldValue, flOldValue);
+			if (pVar->m_fnChangeCallback != NULL)
+			{
+				(*pVar->m_fnChangeCallback)(pVar, pszOldValue, flOldValue);
+			}
 #else
 			for (int i = 0; i < pVar->GetChangeCallbackCount(); i++)
 			{
