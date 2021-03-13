@@ -4,9 +4,12 @@ This Source Engine plugin reveals all console variables (convars/cvars) that are
 
 A list of all console variables/commands that are made available by this plugin can be found in [cvarlist-csgo.md](./cvarlist-csgo.md) and [cvarlist-portal2.md](./cvarlist-portal2.md).
 
-> 💡 For VAC safety, you must add `-insecure` to CSGO's launch options. The plugin will not load without this command-line argument set.
+> ### 💡
+>
+> You must add `-insecure` to CSGO's launch options for the game client to load plugins.
+> The plugin will not load without this command-line argument set.
 
-### Supported games
+## Supported games
 
 - Counter-Strike: Global Offensive
 - Portal 2
@@ -16,10 +19,12 @@ A list of all console variables/commands that are made available by this plugin 
 1. **Download the latest release of the plugin**. Choose the correct release for your game and OS: \
    https://github.com/saul/cvar-unhide/releases/latest
 1. **Extract the contents of the ZIP to the game's mod folder.**
+
    - 📂 `$STEAM\steamapps\common\Counter-Strike Global Offensive\csgo` for CSGO
    - 📂 `$STEAM\steamapps\common\Portal 2\portal2` for Portal 2
 
    After extraction there should be an `addons` folder in the game folder, e.g. `Portal 2\portal2\addons\...`
+
 1. **Start the game from Steam.** \
    ⚠ CSGO must be launched with `-insecure` in the launch options. If you don't know how to do this, take a look this [Steam Community guide](https://steamcommunity.com/sharedfiles/filedetails/?id=379782151).
 
