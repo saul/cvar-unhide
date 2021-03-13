@@ -137,31 +137,6 @@ CServerPlugin::~CServerPlugin()
 //-----------------------------------------------------------------------------
 bool CServerPlugin::Load(CreateInterfaceFn interfaceFactory, CreateInterfaceFn gameServerFactory)
 {
-#ifndef CVAR_UNHIDE_GAME_PORTAL2
-	int result = IFACE_FAILED;
-	IVEngineServer* engine = (IVEngineServer*)interfaceFactory(INTERFACEVERSION_VENGINESERVER, &result);
-	bool isDedicated = engine != NULL ? engine->IsDedicatedServer() : false;
-
-	// Add -insecure to the CommandLine so we can't connect to VAC servers.
-	// Source should already disallow us from loading clientplugins without
-	// -insecure on the commandline. This is a very cautious safeguard.
-	if(!isDedicated && !CommandLine()->FindParm("-insecure"))
-	{
-		ConColorMsg(COLOUR_YELLOW, "\n========================================================================\n");
-
-		ConColorMsg(COLOUR_CYAN,
-			"You forgot to add \"-insecure\" to your launch options!\n\n"
-			"This is a safe-guard to ensure you launch the game without VAC, and therefore disallow you from connecting to secure servers.\n"
-			);
-
-		ConColorMsg(COLOUR_YELLOW, "========================================================================\n\n");
-
-		// Open console on startup so we don't miss the error message
-		CommandLine()->AppendParm("-console", "");
-		return false;
-	}
-#endif
-
 	ConnectTier1Libraries(&interfaceFactory, 1);
 
 	g_gameServerFactory = gameServerFactory;
