@@ -4,7 +4,7 @@ This Source Engine plugin reveals all console variables (convars/cvars) that are
 
 A list of all console variables/commands that are made available by this plugin can be found in [cvarlist-csgo.md](./cvarlist-csgo.md) and [cvarlist-portal2.md](./cvarlist-portal2.md).
 
-> ## 💡
+> ### 💡
 >
 > You must add `-insecure` to CSGO's launch options for the game client to load plugins.
 > The plugin will not load without this command-line argument set.
