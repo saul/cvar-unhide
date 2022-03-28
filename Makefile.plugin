@@ -10,7 +10,7 @@ PLUGIN_OBJ_DIR = $(BUILD_OBJ_DIR)/$(NAME)_$(ARCH)
 TIER0_OBJ_DIR = $(PLUGIN_OBJ_DIR)/tier0
 
 INCLUDEDIRS = -I$(PUBLIC_SRC_DIR) -I$(TIER0_PUBLIC_SRC_DIR) -I$(TIER1_PUBLIC_SRC_DIR)
-LDFLAGS_PLG = -lm -ldl $(LIB_DIR)/libtier0.so $(LIB_DIR)/libvstdlib.so $(LIB_DIR)/mathlib_$(ARCH).a $(LIB_DIR)/tier1_$(ARCH).a
+LDFLAGS_PLG = -lm -ldl -L$(LIB_DIR) -ltier0 -lvstdlib $(LIB_DIR)/mathlib_$(ARCH).a $(LIB_DIR)/tier1_$(ARCH).a $(LIB_DIR)/interfaces_$(ARCH).a
 
 DO_CC = $(CPLUS) $(INCLUDEDIRS) -DARCH=$(ARCH)
 

@@ -14,7 +14,7 @@ else
 CC = /usr/bin/gcc
 CPLUS = /usr/bin/g++
 CLINK = /usr/bin/gcc
-CPP_LIB = "libgcc_s.so.1"
+CPP_LIB = "-lstdc++ libgcc_s.so.1"
 endif
 
 # put any compiler flags you want passed here
@@ -74,7 +74,7 @@ DEFINES += -DCOMPILER_GCC -DPOSIX -DVPROF_LEVEL=1 -DSWDS -D_finite=finite -Dstri
 UNDEF = -Usprintf -Ustrncpy -UPROTECTED_THINGS_ENABLE
 
 BASE_CFLAGS = -fno-strict-aliasing -Wall -Werror -Wno-conversion -Wno-overloaded-virtual -Wno-non-virtual-dtor -Wno-invalid-offsetof \
-	      -Wno-unused
+	      -Wno-unused -std=c++11
 SHLIBCFLAGS = -fPIC
 
 # Flags passed to the c compiler
