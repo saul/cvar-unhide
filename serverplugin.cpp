@@ -393,6 +393,68 @@ public:
 
 } copier;
 
+#ifdef CVAR_UNHIDE_GAME_L4D2
+struct CVValue_t
+{
+	char*& m_pszString;
+	int& m_StringLength;
+	int& m_nValue;
+	float& m_fValue;
+};
+#endif
+
+class CCvar
+{
+public:
+	static void ForceSetValue(ConVar *pVar, const char *pszNewValue, bool bNoCallback)
+	{
+#ifdef CVAR_UNHIDE_GAME_L4D2
+		CVValue_t value = { pVar->m_pszString, pVar->m_StringLength, pVar->m_nValue, pVar->m_fValue };
+#else
+		ConVar::CVValue_t& value = pVar->GetRawValue();
+#endif
+
+		char* pszOldValue = (char*)stackalloc(value.m_StringLength);
+		memcpy(pszOldValue, value.m_pszString, value.m_StringLength);
+		float flOldValue = value.m_fValue;
+
+		value.m_nValue = atoi(pszNewValue);
+		value.m_fValue = atof(pszNewValue);
+
+		int len = Q_strlen(pszNewValue) + 1;
+
+		if (len > value.m_StringLength)
+		{
+			// Copies string using tier1 local new/delete operators
+			// This leaks the old string, but we don't have tier1's delete[] to hand
+			value.m_pszString = copier.CopyString(pszNewValue);
+			value.m_StringLength = len;
+		}
+		else
+		{
+			memcpy(value.m_pszString, pszNewValue, len);
+		}
+
+		// Invoke any necessary callback function
+		if (!bNoCallback)
+		{
+#ifdef CVAR_UNHIDE_GAME_L4D2
+			if (pVar->m_fnChangeCallback != NULL)
+			{
+				(*pVar->m_fnChangeCallback)(pVar, pszOldValue, flOldValue);
+			}
+#else
+			for (int i = 0; i < pVar->GetChangeCallbackCount(); i++)
+			{
+				pVar->GetChangeCallback(i)(pVar, pszOldValue, flOldValue);
+			}
+#endif
+
+			g_pCVar->CallGlobalChangeCallbacks(pVar, pszOldValue, flOldValue);
+		}
+	}
+};
+
 CON_COMMAND(cvar_set, "Set the value of a ConVar regardless of its maximum/minimum values")
 {
 	if (args.ArgC() < 3)
@@ -411,40 +473,7 @@ CON_COMMAND(cvar_set, "Set the value of a ConVar regardless of its maximum/minim
 	bool bNoCallback = args.FindArg("nocallback") != NULL;
 	const char *pszNewValue = args[2];
 
-	ConVar::CVValue_t &value = pVar->GetRawValue();
-
-	char* pszOldValue = (char*)stackalloc(value.m_StringLength);
-	memcpy(pszOldValue, value.m_pszString, value.m_StringLength);
-	float flOldValue = value.m_fValue;
-
-	value.m_nValue = atoi(pszNewValue);
-	value.m_fValue = atof(pszNewValue);
-
-	int len = Q_strlen(pszNewValue) + 1;
-
-	if (len > value.m_StringLength)
-	{
-		// Copies string using tier1 local new/delete operators
-		// This leaks the old string, but we don't have tier1's delete[] to hand
-		value.m_pszString = copier.CopyString(pszNewValue);
-		value.m_StringLength = len;
-	}
-	else
-	{
-		memcpy(value.m_pszString, pszNewValue, len);
-	}
-
-	// Invoke any necessary callback function
-	if (!bNoCallback)
-	{
-		for (int i = 0; i < pVar->GetChangeCallbackCount(); i++)
-		{
-			pVar->GetChangeCallback(i)(pVar, pszOldValue, flOldValue);
-		}
-
-		g_pCVar->CallGlobalChangeCallbacks(pVar, pszOldValue, flOldValue);
-	}
-
+	CCvar::ForceSetValue(pVar, pszNewValue, bNoCallback);
 	Msg("cvar_set: Set %s => %s\n", args[1], pszNewValue);
 }
 
@@ -479,7 +508,9 @@ void DumpSendTable(SendTable *pTable, int nDepth)
 		case DPT_String: Msg("string"); break;
 		case DPT_Array: Msg("array[%d]", pProp->GetNumElements()); break;
 		case DPT_DataTable: Msg("datatable"); break;
+#ifndef CVAR_UNHIDE_GAME_L4D2
 		case DPT_Int64: Msg("int64"); break;
+#endif
 		default: Warning("unknown"); break;
 		}
 
