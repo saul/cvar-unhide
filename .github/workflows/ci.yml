@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
   workflow_dispatch:
 
 jobs:
@@ -24,58 +24,58 @@ jobs:
       version: ${{ steps.version.outputs.version }}
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Checkout hl2sdk
-      run: |
-        git config -f .gitmodules submodule.hl2sdk.branch ${{ matrix.game }}
-        git submodule sync
-        git submodule update --init --remote
+      - name: Checkout hl2sdk
+        run: |
+          git config -f .gitmodules submodule.hl2sdk.branch ${{ matrix.game }}
+          git submodule sync
+          git submodule update --init --remote
 
-    - name: Get current time
-      uses: 1466587594/get-current-time@v2
-      id: current-time
-      with:
-        format: YYYYMMDD
+      - name: Get current time
+        uses: 1466587594/get-current-time@v2
+        id: current-time
+        with:
+          format: YYYYMMDD
 
-    - id: version
-      run: echo "::set-output name=version::${{ steps.current-time.outputs.formattedTime }}.${{ github.run_number }}"
+      - id: version
+        run: echo "::set-output name=version::${{ steps.current-time.outputs.formattedTime }}.${{ github.run_number }}"
 
-    - name: Format game name
-      uses: ASzc/change-string-case-action@v1
-      id: game-name
-      with:
-        string: ${{ matrix.game }}
+      - name: Format game name
+        uses: ASzc/change-string-case-action@v1
+        id: game-name
+        with:
+          string: ${{ matrix.game }}
 
-    - name: Write version.h
-      uses: DamianReeves/write-file-action@v1.0
-      with:
-        path: version.h
-        contents: |
-          #define CVAR_UNHIDE_VERSION "${{ steps.version.outputs.version }}-${{ matrix.game }}"
-          #define CVAR_UNHIDE_GAME_${{ steps.game-name.outputs.uppercase }}
-        write-mode: overwrite
+      - name: Write version.h
+        uses: DamianReeves/write-file-action@v1.0
+        with:
+          path: version.h
+          contents: |
+            #define CVAR_UNHIDE_VERSION "${{ steps.version.outputs.version }}-${{ matrix.game }}"
+            #define CVAR_UNHIDE_GAME_${{ steps.game-name.outputs.uppercase }}
+          write-mode: overwrite
 
-    - name: Add MSBuild to PATH
-      if: ${{ matrix.os == 'windows-2019' }}
-      uses: microsoft/setup-msbuild@v1.0.2
+      - name: Add MSBuild to PATH
+        if: ${{ matrix.os == 'windows-2019' }}
+        uses: microsoft/setup-msbuild@v1.0.2
 
-    - name: Build plugin (Windows)
-      if: ${{ matrix.os == 'windows-2019' }}
-      run: msbuild /m /p:Configuration=Release cvar-unhide.sln
+      - name: Build plugin (Windows)
+        if: ${{ matrix.os == 'windows-2019' }}
+        run: msbuild /m /p:Configuration=Release cvar-unhide.sln
 
-    - name: Build plugin (Linux)
-      if: ${{ matrix.os == 'ubuntu-18.04' }}
-      uses: docker://saulren/serverplugin-base:latest
-      with:
-        args: make plugin
+      - name: Build plugin (Linux)
+        if: ${{ matrix.os == 'ubuntu-18.04' }}
+        uses: docker://buildpack-deps:22.04
+        with:
+          args: make plugin
 
-    - name: Archive binaries
-      uses: actions/upload-artifact@v2
-      with:
-        name: addons-${{ matrix.game }}-${{ matrix.os }}
-        path: addons
-        retention-days: 5
+      - name: Archive binaries
+        uses: actions/upload-artifact@v2
+        with:
+          name: addons-${{ matrix.game }}-${{ matrix.os }}
+          path: addons
+          retention-days: 5
 
   deploy:
     needs: [build]
