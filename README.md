@@ -1,3 +1,7 @@
+> ## Important:
+>
+> Looking for Source 2 support? Take a look at [cvar-unhide-s2](https://github.com/saul/cvar-unhide-s2).
+
 # cvar-unhide [![CI](https://github.com/saul/cvar-unhide/actions/workflows/ci.yml/badge.svg)](https://github.com/saul/cvar-unhide/actions/workflows/ci.yml)
 
 This Source Engine plugin reveals all console variables (convars/cvars) that are marked as hidden or development-only. The plugin can also set console variables to arbitrary values, bypassing any hard-coded minimum/maximum. Furthermore, console commands can be 'force dispatched' regardless of whether they are marked as hidden, cheat or development-only.
