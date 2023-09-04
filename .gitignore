@@ -5,3 +5,4 @@ Release
 *.dll
 *.so
 plugin_map.txt
+obj
