@@ -1,16 +1,13 @@
-NAME = cvar-unhide
-
-PLUGIN_SRC_DIR = $(SRC_DIR)/..
+PLUGIN_SRC_DIR = .
 PUBLIC_SRC_DIR = $(SRC_DIR)/public
 TIER0_PUBLIC_SRC_DIR = $(SRC_DIR)/public/tier0
 TIER1_PUBLIC_SRC_DIR = $(SRC_DIR)/public/tier1
-INTERFACES_PUBLIC_SRC_DIR = $(SRC_DIR)/public/interfaces
 
 PLUGIN_OBJ_DIR = $(BUILD_OBJ_DIR)/$(NAME)_$(ARCH)
 TIER0_OBJ_DIR = $(PLUGIN_OBJ_DIR)/tier0
 
 INCLUDEDIRS = -I$(PUBLIC_SRC_DIR) -I$(TIER0_PUBLIC_SRC_DIR) -I$(TIER1_PUBLIC_SRC_DIR)
-LDFLAGS_PLG = -lm -ldl -L$(LIB_DIR) -ltier0 -lvstdlib $(LIB_DIR)/mathlib_$(ARCH).a $(LIB_DIR)/tier1_$(ARCH).a $(LIB_DIR)/interfaces_$(ARCH).a
+LDFLAGS_PLG = -lm -ldl -L. -ltier0_client -lvstdlib_client $(LIB_DIR)/mathlib.a $(LIB_DIR)/tier1.a $(LIB_DIR)/interfaces.a
 
 DO_CC = $(CPLUS) $(INCLUDEDIRS) -DARCH=$(ARCH)
 
@@ -30,15 +27,15 @@ PLUGIN_OBJS = \
 TIER0_OBJS = \
 	$(TIER0_OBJ_DIR)/memoverride.o \
 
-all: dirs $(NAME).$(SHLIBEXT)
+all: dirs $(NAME)_client.$(SHLIBEXT)
 
 dirs:
 	-mkdir -p $(BUILD_OBJ_DIR)
 	-mkdir -p $(PLUGIN_OBJ_DIR)
 	-mkdir -p $(TIER0_OBJ_DIR)
 
-$(NAME).$(SHLIBEXT): $(PLUGIN_OBJS) $(TIER0_OBJS)
-	$(CLINK) -o $(BUILD_DIR)/$@ -m32 $(SHLIBLDFLAGS) $(PLUGIN_OBJS) $(TIER0_OBJS) $(PUBLIC_OBJS) $(CPP_LIB) $(LDFLAGS_PLG) $(CPP_LIB)
+$(NAME)_client.$(SHLIBEXT): $(PLUGIN_OBJS) $(TIER0_OBJS)
+	$(CLINK) -o $(BUILD_DIR)/$@ $(SHLIBLDFLAGS) $(PLUGIN_OBJS) $(TIER0_OBJS) $(PUBLIC_OBJS) $(CPP_LIB) $(LDFLAGS_PLG) $(CPP_LIB)
 
 $(PLUGIN_OBJ_DIR)/%.o: $(PLUGIN_SRC_DIR)/%.cpp
 	$(DO_CC)
@@ -48,4 +45,4 @@ $(TIER0_OBJ_DIR)/%.o: $(TIER0_PUBLIC_SRC_DIR)/%.cpp
 
 clean:
 	-rm -rf $(PLUGIN_OBJ_DIR)
-	-rm -f $(NAME).$(SHLIBEXT)
+	-rm -f $(NAME)_client.$(SHLIBEXT)
